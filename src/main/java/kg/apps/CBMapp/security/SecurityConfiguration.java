@@ -1,4 +1,4 @@
-package kg.apps.CBMapp.config;
+package kg.apps.CBMapp.security;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
@@ -9,17 +9,17 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
-import kg.apps.CBMapp.repository.UsersRepository;
-import kg.apps.CBMapp.service.CustomUserDetailsService;
+import kg.apps.CBMapp.repository.UserRepository;
+import kg.apps.CBMapp.service.impl.UserServiceImpl;
 
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 @EnableWebSecurity
-@EnableJpaRepositories(basePackageClasses = UsersRepository.class)
+@EnableJpaRepositories(basePackageClasses = UserRepository.class)
 @Configuration
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter
 {
     @Autowired
-    private CustomUserDetailsService userDetailsService;
+    private UserServiceImpl userDetailsService;
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception
