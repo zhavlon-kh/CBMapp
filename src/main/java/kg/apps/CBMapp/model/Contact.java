@@ -19,7 +19,7 @@ public class Contact {
     private Date birthday;
 
     @ManyToOne
-    @JoinColumn(name = "ContactBookId")
+    @JoinColumn//(name = "ContactBookId")
     private User user;
 
     @OneToMany(mappedBy = "contact", fetch = FetchType.EAGER)

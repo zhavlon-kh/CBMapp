@@ -9,6 +9,6 @@ import java.util.List;
 @Service
 public interface ContactService {
 
-    List<Contact> selectUserContacts(User user);
+    List<Contact> selectUserContacts();
 
 }

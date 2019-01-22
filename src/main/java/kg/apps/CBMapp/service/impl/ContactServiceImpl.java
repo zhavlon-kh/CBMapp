@@ -17,15 +17,15 @@ public class ContactServiceImpl implements ContactService {
     @Autowired
     private ContactRepository contactRepository;
 
-    @Autowired
-    private UserRepository userRepository;
+    /*@Autowired
+    private UserRepository userRepository;*/
 
     @Override
-    public List<Contact> selectUserContacts(User user) {
-        //Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+    public List<Contact> selectUserContacts() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
-        List<Contact> contacts= contactRepository.findAll();
-        List<Contact> userContacts = new ArrayList<>();
+        //List<Contact> contacts= contactRepository.findAllByUser(authentication.getName());
+        //List<Contact> userContacts = new ArrayList<>();
 
         /*for (Contact contact:contacts){
             if (contact.getUser().getId()==user.getId()){
@@ -33,9 +33,9 @@ public class ContactServiceImpl implements ContactService {
             }
         }*/
 
-        userContacts.addAll(contactRepository.findAllByUser(user));
+        //userContacts.addAll(contactRepository.findAllByUser(user));
 
 
-        return userContacts;
+        return null;
     }
 }
