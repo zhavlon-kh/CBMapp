@@ -6,9 +6,6 @@ import kg.apps.CBMapp.repository.ContactRepository;
 import kg.apps.CBMapp.repository.UserRepository;
 import kg.apps.CBMapp.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -41,7 +38,7 @@ public class MainController
 	}
 
 
-	@RequestMapping(value = {"/contacts"})
+	@RequestMapping(value = {"/contact"})
 	@ResponseBody
 	public List<Contact> getContacts() {
 		/*Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
