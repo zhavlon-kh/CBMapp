@@ -23,15 +23,28 @@ public class ContactServiceImpl implements ContactService {
 
     @Override
     public List<Contact> selectUserContacts() {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
-        Optional<User> userOptional = userRepository.findByUsername(authentication.getName());
-
-        User user = userOptional.get();
+        User user = getCurrentUser(userRepository);
 
         List<Contact> contacts= contactRepository.findAllByUser(user);
 
-
         return contacts;
+    }
+
+    @Override
+    public void addContact(Contact newContact) {
+        contactRepository.save(newContact);
+    }
+
+    @Override
+    public void deleteContact(Contact contact) {
+        contactRepository.delete(contact);
+    }
+
+    static User getCurrentUser(UserRepository userRepository){
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+        Optional<User> userOptional = userRepository.findByUsername(authentication.getName());
+        return userOptional.get();
     }
 }
