@@ -13,6 +13,8 @@ public interface ContactService {
 
     void  addContact(Contact newContact);
 
-    void deleteContact(Contact contact);
+    void deleteContactById(long contactId);
+
+    Contact getContactById(Long id) throws Exception;
 
 }

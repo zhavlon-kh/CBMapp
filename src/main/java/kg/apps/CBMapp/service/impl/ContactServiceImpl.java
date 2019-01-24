@@ -11,6 +11,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 @Service
@@ -33,12 +34,29 @@ public class ContactServiceImpl implements ContactService {
 
     @Override
     public void addContact(Contact newContact) {
+        User user =getCurrentUser(userRepository);
+        newContact.setUser(user);
         contactRepository.save(newContact);
     }
 
     @Override
-    public void deleteContact(Contact contact) {
-        contactRepository.delete(contact);
+    public void deleteContactById(long contactId) {
+        contactRepository.deleteById(contactId);
+    }
+
+    @Override
+    public Contact getContactById(Long id) throws Exception {
+        if (id.equals(null) || id<0)
+            throw new Exception("MyError: Contact for edit cannot found, please insert Long id variable to getContactById contactService...");
+
+
+
+        Optional<Contact> contact = contactRepository.findById(id);
+
+        if (!contact.isPresent())
+            throw new Exception("MyError: Contact for edit cannot found, please insert Long id variable to getContactById contactService...");
+
+        return contact.get();
     }
 
     static User getCurrentUser(UserRepository userRepository){
