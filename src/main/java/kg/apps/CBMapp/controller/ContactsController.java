@@ -68,12 +68,12 @@ public class ContactsController {
         }
 
         Set<ContactEmail> emails= new HashSet<>();
-        for (String email:request.getParameterValues("newEmail")){
+        /*for (String email:request.getParameterValues("newEmail")){
             ContactEmail newEmail = new ContactEmail();
             newEmail.setContact(contact);
             newEmail.setEmail(email);
             //TODO: emailService.addEmail;
-        }
+        }*/
 
 
         //TODO: contact.setMobile();
