@@ -2,6 +2,7 @@ package kg.apps.CBMapp.model;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -31,6 +32,8 @@ public class Contact {
     public Contact() {
     }
 
+
+
     public Contact(String name, String surname, String nickname, String company, Date birthdate, User user, Set<ContactMobile> mobiles, Set<ContactEmail> emails) {
         this.name = name;
         this.surname = surname;
@@ -56,6 +59,8 @@ public class Contact {
     public long getId() {
         return id;
     }
+
+    public void setId(long id) {this.id = id;}
 
     public String getName() {
         return name;

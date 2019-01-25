@@ -16,41 +16,56 @@
 <body>
 <h1>Add New Contact</h1>
 
-<form:form method="post" action="save">
+<form method="post" action="save">
     <table>
         <tr>
             <td></td>
-            <td><form:hidden  path="id" /></td>
+            <td><input type="hidden" name="id" value="${contact.id}" /></td>
         </tr>
 
         <tr>
             <td>Name : </td>
-            <td><form:input path="name"  /></td>
+            <td><input type="text" name="name" value="${contact.name}"/> </td>
         </tr>
         <tr>
             <td>Surname :</td>
-            <td><form:input path="surname" /></td>
+            <td><input type="text" name="surname" value="${contact.surname}"/></td>
         </tr>
         <tr>
             <td>Nickname :</td>
-            <td><form:input path="nickname" /></td>
+            <td><input type="text" name="nickname" value="${contact.nickname}"/></td>
         </tr>
         <tr>
             <td>Company :</td>
-            <td><form:input path="company" /></td>
+            <td><input type="text" name="company" value="${contact.company}"/></td>
         </tr>
         <tr>
             <td>Birhtday :</td>
             <td>
-                <form:input type="date" path="birthday" class= "date" name = "birhtday" />
+                <input type="date" name = "birthday" value="${contact.birthday}"/>
             </td>
         </tr>
         <tr>
-            <td>Nickname :</td>
+            <td>Mobile :</td>
             <td>
-                <ul>
-                    <p>+996550555555</p> <a href="#">Add Mobile</a>
-                </ul>
+                <c:forEach items="${contact.mobiles}" var="mobile">
+                    <ul>
+                        <input type="text" name="mobiles" value="${mobile.phoneNumber}">
+                        <button> Edit</button>
+                        <button>Delete</button>
+                    </ul>
+                </c:forEach>
+                <input type="text" name="newMobile">
+            </td>
+        </tr>
+        <tr>
+            <td style="vertical-align: top">Emails :</td>
+            <td>
+                <c:forEach items="${contact.emails}" var="email">
+                        <input type="email" name="email" value="${email.email}"/>
+                </c:forEach>
+                <input name="email" type="email"/>
+                
             </td>
         </tr>
         <tr>
@@ -58,6 +73,6 @@
             <td><input type="submit" value="Save" /> <a href="/contacts/">Cancel</a></td>
         </tr>
     </table>
-</form:form>
+</form>
 </body>
 </html>

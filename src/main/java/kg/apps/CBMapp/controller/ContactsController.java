@@ -2,6 +2,7 @@ package kg.apps.CBMapp.controller;
 
 import com.sun.org.apache.xpath.internal.operations.Mod;
 import kg.apps.CBMapp.model.Contact;
+import kg.apps.CBMapp.model.ContactEmail;
 import kg.apps.CBMapp.service.ContactService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
@@ -13,8 +14,9 @@ import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.constraints.Email;
 import java.text.ParseException;
-import java.util.Date;
+import java.util.*;
 import java.text.SimpleDateFormat;
 
 @Controller
@@ -38,14 +40,25 @@ public class ContactsController {
 
     @RequestMapping("/form")
     public String contactForm(Model model){
-        model.addAttribute("command", new Contact());
+        model.addAttribute("contact", new Contact());
         return  "form";
     }
 
-    @RequestMapping(value = "/save", method = RequestMethod.POST)
-    public String saveContact(HttpServletRequest request, @PathVariable Contact contact) {
+    @RequestMapping(value = {"/save","/edit/save"}, method = RequestMethod.POST)
+    public String saveContact(HttpServletRequest request) {
 
-        String bd =request.getParameter("birthday");
+        Contact contact = new Contact();
+        String idStr =request.getParameter("id");
+        Long id = Long.getLong(idStr);
+        if (!Objects.isNull(id)) {
+            contact.setId(id);
+        }
+        contact.setName(request.getParameter("name"));
+        contact.setSurname(request.getParameter("surname"));
+        contact.setNickname(request.getParameter("nickname"));
+        contact.setCompany(request.getParameter("company"));
+
+        String bd = request.getParameter("birthday");
         try {
             Date bdate = dateFormat.parse(bd);
             contact.setBirthday(bdate);
@@ -53,6 +66,18 @@ public class ContactsController {
             System.out.println("Entered Birthdate: "+request.getParameter("birthday"));
             e.printStackTrace();
         }
+
+        Set<ContactEmail> emails= new HashSet<>();
+        for (String email:request.getParameterValues("newEmail")){
+            ContactEmail newEmail = new ContactEmail();
+            newEmail.setContact(contact);
+            newEmail.setEmail(email);
+            //TODO: emailService.addEmail;
+        }
+
+
+        //TODO: contact.setMobile();
+
 
 
         contactService.addContact(contact);
@@ -63,9 +88,14 @@ public class ContactsController {
 
     @RequestMapping(value = "/edit/{id}")
     public String editContact(@PathVariable long id, Model model) throws Exception {
+
         Contact contact = contactService.getContactById(id);
 
-        model.addAttribute("command", contact);
+        Set<ContactEmail> emails = contact.getEmails();
+
+        //model.addAttribute("emails",emails);
+
+        model.addAttribute("contact", contact);
         return "form";
     }
 
