@@ -6,6 +6,8 @@ import kg.apps.CBMapp.repository.ContactRepository;
 import kg.apps.CBMapp.repository.UserRepository;
 import kg.apps.CBMapp.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -29,16 +31,41 @@ public class MainController
 	@Autowired
     ContactRepository contactRepository;
 
-	@RequestMapping(value = {"/index"}, method = RequestMethod.GET)
+	/*@RequestMapping(value = {"/welcome"}, method = RequestMethod.GET)
 	public String getWelcomePage(Model model)
 	{
-		return "index";
-	}
 
-	@RequestMapping(value = {"/profile","/index/profile"}, method = RequestMethod.GET)
-    public String getProfilePage(Model model)
+
+		return "welcome";
+	}*/
+
+    @RequestMapping(value = {"/","/welcome"})
+    public String getUsers(Model model){
+
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+        Optional<User> userOptional = userRepository.findByUsername(authentication.getName());
+
+        User user = userOptional.get();
+
+        model.addAttribute("user",user);
+        return "welcome";
+    }
+
+
+    @RequestMapping(value="/editprofile", method=RequestMethod.GET)
+    public String getIndex(Model model)
     {
-        return "profile";
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+        Optional<User> userOptional = userRepository.findByUsername(authentication.getName());
+
+        User user = userOptional.get();
+
+        model.addAttribute("user",user);
+
+        return "editprofile";
+
     }
 
 

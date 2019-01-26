@@ -27,4 +27,4 @@ public class CBMappApplication
 	    resolver.setViewClass(JstlView.class);
 	    return resolver;
 	}
-}
+			}
