@@ -33,14 +33,14 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter
     {
         http.csrf().disable();
         http.authorizeRequests()
-        		.antMatchers("/admin/**").authenticated()
-                .antMatchers("/welcome/**").authenticated()
+        		//.antMatchers("/admin/**").authenticated()
+                .antMatchers("/index/**").authenticated()
                 //.antMatchers("/task/**").authenticated()
                 .anyRequest().permitAll()
                 .and()
                 .formLogin()
                 .loginPage("/login").permitAll()
-                .defaultSuccessUrl("/welcome")
+                .defaultSuccessUrl("/index")
         		.and().logout()
         		.logoutUrl("/logout") 
         		.logoutSuccessUrl("/login")
