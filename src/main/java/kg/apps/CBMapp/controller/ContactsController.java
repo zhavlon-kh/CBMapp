@@ -95,10 +95,13 @@ public class ContactsController {
 
         Contact contact = contactService.getContactById(id);
 
+        String birthday = dateFormat.format(contact.getBirthday());
+
         Set<ContactEmail> emails = contact.getEmails();
 
         //model.addAttribute("emails",emails);
 
+        model.addAttribute("birthday", birthday);
         model.addAttribute("contact", contact);
         return "form";
     }
