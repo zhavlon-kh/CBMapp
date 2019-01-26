@@ -3,6 +3,7 @@ package kg.apps.CBMapp.controller;
 import kg.apps.CBMapp.model.Contact;
 import kg.apps.CBMapp.model.ContactEmail;
 import kg.apps.CBMapp.service.ContactService;
+import kg.apps.CBMapp.service.EmailService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -22,6 +23,9 @@ public class ContactsController {
     @Autowired
     ContactService contactService;
 
+    @Autowired
+    EmailService emailService;
+
     SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 
     Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -30,6 +34,7 @@ public class ContactsController {
     @RequestMapping(value = {"/",""})
     public String getContacts(Model model){
 
+        model.addAttribute("dateFormat",dateFormat);
             model.addAttribute("contacts",contactService.selectUserContacts());
             return "contacts";
     }
@@ -75,7 +80,7 @@ public class ContactsController {
                 ContactEmail newEmail = new ContactEmail();
                 newEmail.setContact(contact);
                 newEmail.setEmail(email);
-                //TODO: emailService.addEmail;
+                emailService.addEmail(newEmail);
             }
         }
 
@@ -86,7 +91,7 @@ public class ContactsController {
 
         contactService.addContact(contact);
 
-        return "redirect:/contacts";
+        return "redirect/contacts:";
 
     }
 

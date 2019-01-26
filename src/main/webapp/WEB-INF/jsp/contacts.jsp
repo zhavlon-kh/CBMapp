@@ -11,6 +11,7 @@
     <div><a href="/contacts/form">Create New Contact</a></div>
     <table border="1">
         <tr>
+            <th><input type="checkbox" value=""></th>
             <th>Name</th>
             <th>Surname</th>
             <th>Nickname</th>
@@ -22,10 +23,11 @@
         </tr>
         <c:forEach items="${contacts}" var="contact">
             <tr>
+                <td><input type="checkbox" name="selected" value="${contact}"></td>
                 <td>${contact.name}</td>
                 <td>${contact.surname}</td>
                 <td>${contact.nickname}</td>
-                <td>${contact.birthday.toString()}</td>
+                <td>${dateFormat.parse(contact.birthday.toString())}</td>
                 <td><c:forEach items="${contact.mobiles}" var="mobile">
                     ${mobile.phoneNumber} ${mobile.mobileType} <br/>
                 </c:forEach></td>
