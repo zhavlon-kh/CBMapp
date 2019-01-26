@@ -42,7 +42,7 @@
         <tr>
             <td>Birhtday :</td>
             <td>
-                <input type="date" name = "birthday" value="${contact.birthday}"/>
+                <input type="date" name = "birthday" value="1993-12-12"/> <br>
             </td>
         </tr>
         <tr>

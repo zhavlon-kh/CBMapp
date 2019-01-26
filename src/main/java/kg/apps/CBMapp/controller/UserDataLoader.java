@@ -8,7 +8,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 
+import java.time.Instant;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -53,13 +55,13 @@ public class UserDataLoader {
         //user = userOptional.get();
 
         Contact contact1=new Contact("Contact1","Contact1","Con1","Comp1",
-                null,user,null,null);
+                Date.from(Instant.now()),user,null,null);
 
         Contact contact2=new Contact("Contact2","Contact2","Con2","Comp2",
-                null,user,null,null);
+                Date.from(Instant.now()),user,null,null);
 
         Contact contact3=new Contact("Contact3","Contact3","Con3","Comp3",
-                null,user,null,null);
+                Date.from(Instant.now()),user,null,null);
 
         contactRepository.save(contact1);
         contactRepository.save(contact2);

@@ -1,20 +1,16 @@
 package kg.apps.CBMapp.controller;
 
-import com.sun.org.apache.xpath.internal.operations.Mod;
 import kg.apps.CBMapp.model.Contact;
 import kg.apps.CBMapp.model.ContactEmail;
 import kg.apps.CBMapp.service.ContactService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.validation.constraints.Email;
 import java.text.ParseException;
 import java.util.*;
 import java.text.SimpleDateFormat;
@@ -49,10 +45,15 @@ public class ContactsController {
 
         Contact contact = new Contact();
         String idStr =request.getParameter("id");
-        Long id = Long.getLong(idStr);
-        if (!Objects.isNull(id)) {
-            contact.setId(id);
+        Long id = Long.parseLong(idStr);
+        if (!Objects.isNull(id) || id!=0) {
+            try {
+                contact = contactService.getContactById(id);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
+
         contact.setName(request.getParameter("name"));
         contact.setSurname(request.getParameter("surname"));
         contact.setNickname(request.getParameter("nickname"));
@@ -67,12 +68,15 @@ public class ContactsController {
             e.printStackTrace();
         }
 
-        Set<ContactEmail> emails= new HashSet<>();
-        for (String email:request.getParameterValues("newEmail")){
-            ContactEmail newEmail = new ContactEmail();
-            newEmail.setContact(contact);
-            newEmail.setEmail(email);
-            //TODO: emailService.addEmail;
+
+        //TODO: get emails
+        if (!Objects.isNull(request.getParameterValues("newemail"))) {
+            for (String email : request.getParameterValues("newemail")) {
+                ContactEmail newEmail = new ContactEmail();
+                newEmail.setContact(contact);
+                newEmail.setEmail(email);
+                //TODO: emailService.addEmail;
+            }
         }
 
 
