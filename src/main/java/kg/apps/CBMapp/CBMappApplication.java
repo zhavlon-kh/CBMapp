@@ -12,6 +12,9 @@ public class CBMappApplication
 {
 	public static void main(String[] args)
 	{
+
+
+
 		SpringApplication.run(CBMappApplication.class, args);
 	}
 	

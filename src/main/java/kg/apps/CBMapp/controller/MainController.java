@@ -29,13 +29,17 @@ public class MainController
 	@Autowired
     ContactRepository contactRepository;
 
-	@RequestMapping(value = {"/welcome"}, method = RequestMethod.GET)
+	@RequestMapping(value = {"/index"}, method = RequestMethod.GET)
 	public String getWelcomePage(Model model)
 	{
-
-
-		return "welcome";
+		return "index";
 	}
+
+	@RequestMapping(value = {"/profile","/index/profile"}, method = RequestMethod.GET)
+    public String getProfilePage(Model model)
+    {
+        return "profile";
+    }
 
 
 	@RequestMapping(value = {"/contact"})
