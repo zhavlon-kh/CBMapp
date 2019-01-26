@@ -14,7 +14,7 @@
 			<div class="row">
 				<div class="col-xs-12 col-sm-8 col-sm-offset-2 col-md-6 col-md-offset-3 col-lg-6 col-lg-offset-3">
 					<div id="login-box">
-						<h2>Welcome to CMB App</h2>
+						<h2>Welcome to CBM App</h2>
 						<!-- <div class="alert alert-success">
 							<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
 							This alert box could indicate a successful.
@@ -63,7 +63,7 @@
 									<div class="form-group">
 										<input type="password" name="password2" placeholder="Verify password..." class="form-control">
 									</div>
-									<h6>Select user type:</h6>
+									<%--<h6>Select user type:</h6>
 									<div class="form-group">
 										<div class="radio">
 											<label><input type="radio" name="usertype" value="ADMIN" checked>Admin</label>
@@ -71,7 +71,7 @@
 										<div class="radio">
 										 	<label><input type="radio" name="usertype" value="USER">User</label>
 										</div>
-									</div>
+									</div>--%>
 									<div class="form-group">
 										<button type="submit" class="btn btn-default">Sign up</button>
 									</div>

@@ -1,24 +1,25 @@
 package kg.apps.CBMapp.controller;
 
-import java.util.HashSet;
-import java.util.Set;
-
 import javax.servlet.http.HttpServletRequest;
 
+import kg.apps.CBMapp.security.CustomUserDetails;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import kg.apps.CBMapp.model.Role;
-import kg.apps.CBMapp.model.Users;
-import kg.apps.CBMapp.service.CustomUserDetailsService;
+import kg.apps.CBMapp.model.User;
+import kg.apps.CBMapp.service.impl.UserServiceImpl;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import java.security.Principal;
 
 @Controller
 public class LoginController
 {
 	@Autowired
-    private CustomUserDetailsService userDetailsService;
+    private UserServiceImpl userDetailsService;
 	
 	@RequestMapping(value = {"", "/", "/login"}, method = RequestMethod.GET)
 	public String getLoginPage()
@@ -35,24 +36,24 @@ public class LoginController
 		String username = request.getParameter("username");
 		String password1 = request.getParameter("password1");
 		String password2 = request.getParameter("password2");
-		String usertype = request.getParameter("usertype");
+		//String usertype = request.getParameter("usertype");
 		
 		if(password1 != null && password2 != null && password1.equals(password2))
 		{
 			try
 			{
-				Set<Role> roleSet = new HashSet<Role>();
+				/*Set<Role> roleSet = new HashSet<Role>();
 				Role role = new Role();
 				role.setRole(usertype);
-				roleSet.add(role);
+				roleSet.add(role);*/
 				
-				Users newUser = new Users();
+				User newUser = new User();
 				newUser.setName(name);
-				newUser.setLastName(lastname);
+				newUser.setSurname(lastname);
 				newUser.setEmail(email);
 				newUser.setUsername(username);
 				newUser.setPassword(password1);
-				newUser.setRoles(roleSet);
+				//newUser.setRoles(roleSet);
 				
 				userDetailsService.registerNewUser(newUser);
 			}
@@ -63,5 +64,11 @@ public class LoginController
 		}
 		
 		return "login";
+	}
+
+	@RequestMapping(value = {"/user"},method = RequestMethod.GET)
+	@ResponseBody
+	public String currentUser(Principal principal){
+		return principal.getName();
 	}
 }
