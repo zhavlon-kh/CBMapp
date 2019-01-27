@@ -51,7 +51,7 @@ Header
         <nav id="nav-menu-container">
             <ul class="nav-menu">
                 <li class="menu-active"><a href="#hero">Home</a></li>
-                <li><a href="/profile">Profile</a></li>
+                <li><a href="/profile">My Profile</a></li>
                 <li><a href= "/contacts">Contacts</a></li>
                 <li><a href="/login">Logout</a></li>
             </ul>

@@ -35,18 +35,20 @@ public class MainController
 	@Autowired
     ContactRepository contactRepository;
 
+
 	@Autowired
     UserDetailsService userDetailsService;
+
 
 	@RequestMapping(value = {"/index"}, method = RequestMethod.GET)
 	public String getWelcomePage(Model model)
 	{
-
-
 		return "index";
 	}
 
-    @RequestMapping(value = {"/","/profile"})
+
+
+
     public String getUsers(Model model){
 
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -60,7 +62,7 @@ public class MainController
     }
 
 
-    @RequestMapping(value="/editprofile", method=RequestMethod.GET)
+    @RequestMapping(value="/profile/editprofile", method=RequestMethod.GET)
     public String getIndex(Model model)
     {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
