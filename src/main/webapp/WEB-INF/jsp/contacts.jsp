@@ -1,4 +1,3 @@
-
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
@@ -9,8 +8,9 @@
 <div>
     <h1>Contacts</h1>
     <div><a href="/contacts/form">Create New Contact</a></div>
-    <table border="1">
+    <table border="0">
         <tr>
+            <th><input type="checkbox"></th>
             <th>Name</th>
             <th>Surname</th>
             <th>Nickname</th>
@@ -22,6 +22,7 @@
         </tr>
         <c:forEach items="${contacts}" var="contact">
             <tr>
+                <td><input name="selectedcontactsid" type="checkbox" value="${contact.id}"></td>
                 <td>${contact.name}</td>
                 <td>${contact.surname}</td>
                 <td>${contact.nickname}</td>

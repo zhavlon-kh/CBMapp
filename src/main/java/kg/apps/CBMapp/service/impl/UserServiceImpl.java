@@ -31,7 +31,8 @@ public class UserServiceImpl implements UserService
         return optionalUsers
                 .map(CustomUserDetails::new).get();
     }
-    
+
+    @Override
     public void registerNewUser(User newUser)
     {
     	usersRepository.save(newUser);
@@ -45,5 +46,19 @@ public class UserServiceImpl implements UserService
         userContacts.addAll(user.getContacts());
 
         return userContacts;
+    }
+
+
+
+    @Override
+    public void deleteUserById(int userId) {
+
+        usersRepository.deleteById(userId);
+    }
+
+    @Override
+    public User getUserById(int userId) {
+        Optional<User> userOptional = usersRepository.findById(userId);
+        return userOptional.get();
     }
 }
