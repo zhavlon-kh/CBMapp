@@ -31,36 +31,31 @@ public class MainController
 	@Autowired
     ContactRepository contactRepository;
 
-	/*@RequestMapping(value = {"/welcome"}, method = RequestMethod.GET)
-	public String getWelcomePage(Model model)
-	{
 
 
-		return "welcome";
-	}*/
-
-    @RequestMapping(value = {"/","/welcome"})
-    public String getUsers(Model model){
-
+	User getCurrentUser(){
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
         Optional<User> userOptional = userRepository.findByUsername(authentication.getName());
 
         User user = userOptional.get();
+	    return user;
+    }
+
+    @RequestMapping(value = {"/","/welcome"})
+    public String getUsers(Model model){
+	    User user = getCurrentUser();
 
         model.addAttribute("user",user);
-        return "welcome";
+        return "profile";
     }
 
 
     @RequestMapping(value="/editprofile", method=RequestMethod.GET)
     public String getIndex(Model model)
     {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
-        Optional<User> userOptional = userRepository.findByUsername(authentication.getName());
-
-        User user = userOptional.get();
+        User user = getCurrentUser();
 
         model.addAttribute("user",user);
 
