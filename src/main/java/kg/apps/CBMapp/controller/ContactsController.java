@@ -17,7 +17,7 @@ import java.util.*;
 import java.text.SimpleDateFormat;
 
 @Controller
-@RequestMapping(value = {"contacts"})
+@RequestMapping(value = {"/contacts"})
 public class ContactsController {
 
     @Autowired

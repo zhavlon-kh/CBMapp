@@ -31,6 +31,9 @@
                 </c:forEach></td>
                 <td><c:forEach items="${contact.emails}" var="email">
                     ${email.email} <br/>
+                    <div class="btn-group">
+                        <button type="button" class="btn btn-lg" id="delete_btn">Delete</button>
+                    </div>
                 </c:forEach></td>
                 <td><a href="/contacts/edit/${contact.id}">Edit</a></td>
                 <td><a href="/contacts/delete/${contact.id}">Delete</a></td>
@@ -39,4 +42,24 @@
     </table>
 </div>
 </body>
+<script>
+
+    $(document).on('click', '#delete_btn', function(){
+
+        if (confirm("Are you sure you want to delete this task?")) {
+
+            var taskId = $('#task_form').find('input[name="id"]').val();
+            $.ajax({
+                type: "GET",
+                url: "<c:url value='/contacts/deleteTask/"+ contactId +"' />",
+                success: function(){
+                    $('#dialog').dialog('close');
+                    $('#calendar').fullCalendar('removeEvents', taskId);
+                }
+            });
+        }
+    })
+</script>
+
+
 </html>

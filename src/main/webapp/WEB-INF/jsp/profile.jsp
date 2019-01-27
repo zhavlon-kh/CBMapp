@@ -17,7 +17,7 @@
 <div class="container">
       <div class="row">
       <div class="col-md-5  toppad  pull-right col-md-offset-3 ">
-         <a href="/editprofile/" class="btn btn-success">Edit profile</a>
+         <a href="/profile/editprofile/" class="btn btn-success">Edit profile</a>
           <a href="/login/" class="btn btn-danger">Logout</a>
 
 

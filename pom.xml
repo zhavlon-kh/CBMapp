@@ -105,10 +105,15 @@
 		</dependency>-->
 
 		<!--If you run project in your tomcat server disables this dependency -->
-	 <dependency>
+	<!-- <dependency>
 			<groupId>org.apache.tomcat.embed</groupId>
 			<artifactId>tomcat-embed-jasper</artifactId>
 			<scope>provided</scope>
+		</dependency>-->
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-webmvc</artifactId>
+			<version>5.1.3.RELEASE</version>
 		</dependency>
 	</dependencies>
 
