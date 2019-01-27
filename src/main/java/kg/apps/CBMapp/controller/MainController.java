@@ -35,20 +35,18 @@ public class MainController
 	@Autowired
     ContactRepository contactRepository;
 
-
 	@Autowired
     UserDetailsService userDetailsService;
-
 
 	@RequestMapping(value = {"/index"}, method = RequestMethod.GET)
 	public String getWelcomePage(Model model)
 	{
+
+
 		return "index";
 	}
 
-
-
-
+    @RequestMapping(value = {"/","/profile"})
     public String getUsers(Model model){
 
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -62,7 +60,7 @@ public class MainController
     }
 
 
-    @RequestMapping(value="/profile/editprofile", method=RequestMethod.GET)
+    @RequestMapping(value="/editprofile", method=RequestMethod.GET)
     public String getIndex(Model model)
     {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -77,7 +75,7 @@ public class MainController
 
     }
 
-    @RequestMapping(value="/save", method= RequestMethod.POST)
+    /*@RequestMapping(value="/save", method= RequestMethod.POST)
     public String getUserEdit(HttpServletRequest request)
     {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -94,7 +92,8 @@ public class MainController
         userService.registerNewUser(userForEdit);
 
         return "redirect:/login";
-    }
+    }*/
+
     @RequestMapping(value = "/delete/{id}")
     public String deleteUser(@PathVariable String id){
         userService.deleteUserById(Integer.parseInt(id));
