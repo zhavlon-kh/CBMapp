@@ -1,3 +1,4 @@
+.pom.xml
 /target/
 !.mvn/wrapper/maven-wrapper.jar
 /src/main/java/kg/apps/CBMapp/Training.java

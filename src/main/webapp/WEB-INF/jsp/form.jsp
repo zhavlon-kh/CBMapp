@@ -8,7 +8,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jstl/fmt" %>
+<%--<%@ taglib prefix="fmt" uri="http://java.sun.com/jstl/fmt" %>--%>
 <html>
 <head>
     <title>Create New Contact</title>
@@ -61,11 +61,19 @@
         <tr>
             <td style="vertical-align: top">Emails :</td>
             <td>
+                <input type="hidden" id="oldEmails" value="${contact.emails}">
                 <c:forEach items="${contact.emails}" var="email">
-                        <input type="email" name="email" value="${email.email}"/>
+                    <div class="emails">
+                        <div>
+                        <input type="hidden" class="emailsId" name="emailsid" value="${email.id}"/>
+                        <input type="text" class="emails" name="emails" value="${email.email}">
+                        <a onclick="$.fn.myFunction();" href="#" class="btn btn-danger">Delete</a>
+                        </div>
+                    </div>
                 </c:forEach>
-                <input name="email" type="email"/>
-                
+
+                <%--<div id="email_items"/>
+                <button id="add_email" onclick="">Add</button>--%>
             </td>
         </tr>
         <tr>
@@ -74,5 +82,35 @@
         </tr>
     </table>
 </form>
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script>
+
+    function addInput() {
+        $('#email_items').append('<div><input type="text" name="email"/><input type="button" value="Delete" id="delete"/>');
+    };
+
+    $(document).load(function () {
+        /*var oldemails = document.getElementById('#oldEmails');
+        console.log(typeof oldemails);*/
+
+       /* for(email in oldemails){
+            $('#email_items').append('<div><input type="text" name="email" value="'+email+'"/>' +
+                '<button onclick=" detete()" id="delete">Delete</button>');
+        }*/
+
+       $.fn.addEmail = function(){
+           $(".emails").append("");
+       }
+
+        $.fn.myFunction = function(){
+            $(this).parent("div").delete();
+        }
+
+    });
+
+</script>
+
 </body>
 </html>

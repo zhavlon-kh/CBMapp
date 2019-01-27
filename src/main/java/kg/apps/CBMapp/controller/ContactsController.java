@@ -2,6 +2,7 @@ package kg.apps.CBMapp.controller;
 
 import kg.apps.CBMapp.model.Contact;
 import kg.apps.CBMapp.model.ContactEmail;
+import kg.apps.CBMapp.model.ContactMobile;
 import kg.apps.CBMapp.service.ContactService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -43,6 +44,7 @@ public class ContactsController {
     @RequestMapping(value = {"/save","/edit/save"}, method = RequestMethod.POST)
     public String saveContact(HttpServletRequest request) {
 
+        Set<ContactEmail> emails = new HashSet<>();
         Contact contact = new Contact();
         String idStr =request.getParameter("id");
         Long id = Long.parseLong(idStr);
@@ -70,13 +72,43 @@ public class ContactsController {
 
 
         //TODO: get emails
-        if (!Objects.isNull(request.getParameterValues("newemail"))) {
-            for (String email : request.getParameterValues("newemail")) {
+        if (!Objects.isNull(request.getParameterValues("emails"))) {
+            List<String> emailsString = Arrays.asList(request.getParameterValues("emails"));
+
+            if (!Objects.isNull(request.getParameterValues("emailsid"))){
+
+                String[] emailsIdStr= request.getParameterValues("emailsid");
+                List<Long> emailsId=new ArrayList<>();
+
+                for (String emailId: emailsIdStr){
+                    emailsId.add(Long.parseLong(emailId));
+                }
+
+                int i;
+
+                for (i=0;i<emailsString.size();i++){
+                    ContactEmail contactEmail = new ContactEmail();
+
+                    if (!Objects.isNull(emailsId.get(i))){
+                        contactEmail.setId(emailsId.get(i));
+                    }
+
+                    contactEmail.setEmail(emailsString.get(i));
+
+                    emails.add(contactEmail);
+                }
+
+                contact.setEmails(emails);
+            }
+
+
+
+            /*for (String email : request.getParameterValues("newemail")) {
                 ContactEmail newEmail = new ContactEmail();
                 newEmail.setContact(contact);
                 newEmail.setEmail(email);
                 //TODO: emailService.addEmail;
-            }
+            }*/
         }
 
 
