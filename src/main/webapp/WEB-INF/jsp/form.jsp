@@ -61,16 +61,22 @@
         <tr>
             <td style="vertical-align: top">Emails :</td>
             <td>
-                <input type="hidden" id="oldEmails" value="${contact.emails}">
+                <div class="emails">
+
                 <c:forEach items="${contact.emails}" var="email">
-                    <div class="emails">
-                        <div>
+                        <div id = "birEmail">
                         <input type="hidden" class="emailsId" name="emailsid" value="${email.id}"/>
                         <input type="text" class="emails" name="emails" value="${email.email}">
-                        <a onclick="$.fn.myFunction();" href="#" class="btn btn-danger">Delete</a>
+                            <button type="button" class="btn btn-lg" id="delete_btn" value = "delete fnc" onclick="deleteFunction()">Delete</button>
                         </div>
-                    </div>
                 </c:forEach>
+                <div>
+                    <input type="text" class="emails" name="emails" value="">
+                    <btn type="button" class = "btn btn-lg">Add</btn>
+                </div>
+                </div>
+
+
 
                 <%--<div id="email_items"/>
                 <button id="add_email" onclick="">Add</button>--%>
@@ -109,6 +115,12 @@
         }
 
     });
+
+
+    function deleteFunction(){
+        var elem = document.getElementById(${email.id});
+        elem.parentNode.removeChild(elem);
+    };
 
 </script>
 
