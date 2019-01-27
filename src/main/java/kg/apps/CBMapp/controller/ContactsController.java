@@ -4,6 +4,7 @@ import kg.apps.CBMapp.model.Contact;
 import kg.apps.CBMapp.model.ContactEmail;
 import kg.apps.CBMapp.model.ContactMobile;
 import kg.apps.CBMapp.service.ContactService;
+import kg.apps.CBMapp.service.EmailService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -15,6 +16,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.text.ParseException;
 import java.util.*;
 import java.text.SimpleDateFormat;
+import java.util.concurrent.ExecutionException;
 
 @Controller
 @RequestMapping(value = {"contacts"})
@@ -23,7 +25,11 @@ public class ContactsController {
     @Autowired
     ContactService contactService;
 
+    @Autowired
+    private EmailService emailService;
+
     SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+    SimpleDateFormat dateFormat2 =new SimpleDateFormat("dd-MMMMM-yyyy");
 
     Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
@@ -31,8 +37,9 @@ public class ContactsController {
     @RequestMapping(value = {"/",""})
     public String getContacts(Model model){
 
-            model.addAttribute("contacts",contactService.selectUserContacts());
-            return "contacts";
+        model.addAttribute("dateFormat",dateFormat2);
+        model.addAttribute("contacts",contactService.selectUserContacts());
+        return "contacts";
     }
 
     @RequestMapping("/form")
@@ -71,48 +78,87 @@ public class ContactsController {
         }
 
 
-        //TODO: get emails
-        if (!Objects.isNull(request.getParameterValues("emails"))) {
-            List<String> emailsString = Arrays.asList(request.getParameterValues("emails"));
+        contactService.addContact(contact);
 
-            if (!Objects.isNull(request.getParameterValues("emailsid"))){
+        //get emails
 
-                String[] emailsIdStr= request.getParameterValues("emailsid");
-                List<Long> emailsId=new ArrayList<>();
 
-                for (String emailId: emailsIdStr){
-                    emailsId.add(Long.parseLong(emailId));
+        Set<ContactEmail> contactEmails =emailService.selectAllEmailsByContact(contact);
+        ArrayList<Long> emailsId=new ArrayList<>();
+        ArrayList<String> emailsString = new  ArrayList<>();
+        emailsString.addAll(Arrays.asList(request.getParameterValues("emails")));
+
+        Set<Integer> dltdIndx=new HashSet<>();
+
+
+
+        if (!Objects.isNull(request.getParameterValues("emailsid"))){
+            String[] emailsIdStr= request.getParameterValues("emailsid");
+            for (String emailId: emailsIdStr){
+                emailsId.add(Long.parseLong(emailId));
+            }
+        }
+
+        for (int k=0; k<emailsString.size(); k++){
+            if (emailsString.get(k)==""){
+                if (emailsId.size()>k)
+                    emailsId.remove(k);
+                emailsString.remove(k);
+                dltdIndx.add(k);
+            }
+        }
+
+        if (emailsId.size()<contactEmails.size()){
+            for (ContactEmail email: contactEmails){
+                boolean deleted =true;
+                for (Long emailId:emailsId ){
+                    if (emailId==email.getId()){
+                        deleted=false;
+                    }
+                }
+                if (deleted){
+                    emailService.deleteEmailById(email.getId());
                 }
 
-                int i;
+            }
+        }
 
-                for (i=0;i<emailsString.size();i++){
+        Set<ContactEmail> emailsAfterDeleted =emailService.selectAllEmailsByContact(contact);
+
+
+        if (!Objects.isNull(emailsString)) {
+            int i;
+
+            for (i=0;i<emailsString.size();i++){
+
+
+                if((!Objects.isNull(emailsString.get(i)) && emailsString.get(i)!="")){
                     ContactEmail contactEmail = new ContactEmail();
 
-                    if (!Objects.isNull(emailsId.get(i))){
+                    if (emailsId.size()>i){
                         contactEmail.setId(emailsId.get(i));
                     }
 
-                    contactEmail.setEmail(emailsString.get(i));
+                    contactEmail.setContact(contact);
+
+                    String stringEmail = emailsString.get(i);
+
+                    contactEmail.setEmail(stringEmail);
+
+                    emailService.addEmail(contactEmail);
 
                     emails.add(contactEmail);
                 }
 
-                contact.setEmails(emails);
             }
 
+            contact.setEmails(emails);
 
-
-            /*for (String email : request.getParameterValues("newemail")) {
-                ContactEmail newEmail = new ContactEmail();
-                newEmail.setContact(contact);
-                newEmail.setEmail(email);
-                //TODO: emailService.addEmail;
-            }*/
         }
 
 
         //TODO: contact.setMobile();
+
 
 
 
@@ -125,17 +171,30 @@ public class ContactsController {
     @RequestMapping(value = "/edit/{id}")
     public String editContact(@PathVariable long id, Model model) throws Exception {
 
-        Contact contact = contactService.getContactById(id);
+        List<Contact> userContacts=contactService.selectUserContacts();
 
-        String birthday = dateFormat.format(contact.getBirthday());
+        boolean userContact = false;
 
-        Set<ContactEmail> emails = contact.getEmails();
+        for (Contact contact:userContacts){
+            if (contact.getId()==id){
+                userContact=true;
+            }
+        }
 
-        //model.addAttribute("emails",emails);
+        if (userContact){
 
-        model.addAttribute("birthday", birthday);
-        model.addAttribute("contact", contact);
-        return "form";
+            Contact contact = contactService.getContactById(id);
+
+            String birthday = dateFormat.format(contact.getBirthday());
+
+            Set<ContactEmail> emails = contact.getEmails();
+
+            //model.addAttribute("emails",emails);
+
+            model.addAttribute("birthday", birthday);
+            model.addAttribute("contact", contact);
+            return "form";
+        } else {throw new Exception("Trying to get contact with id: "+id);}
     }
 
     @RequestMapping(value = "/delete/{id}")

@@ -46,34 +46,37 @@
             </td>
         </tr>
         <tr>
-            <td>Mobile :</td>
+            <td style="vertical-align: top">Mobile :</td>
             <td>
-                <c:forEach items="${contact.mobiles}" var="mobile">
-                    <ul>
-                        <input type="text" name="mobiles" value="${mobile.phoneNumber}">
-                        <button> Edit</button>
-                        <button>Delete</button>
-                    </ul>
-                </c:forEach>
-                <input type="text" name="newMobile">
+                <form name="mobiles" class="mobiles">
+                    <div>
+                        <c:forEach items="${contact.mobiles}" var="mobile">
+                            <div>
+                                <input type="text" name="phoneNumber" value="${mobile.phoneNumber}">
+                                <button type="button">Delete</button>
+                            </div>
+                        </c:forEach>
+
+                    </div>
+                </form>
+
             </td>
         </tr>
         <tr>
             <td style="vertical-align: top">Emails :</td>
             <td>
-                <input type="hidden" id="oldEmails" value="${contact.emails}">
-                <c:forEach items="${contact.emails}" var="email">
-                    <div class="emails">
-                        <div>
-                        <input type="hidden" class="emailsId" name="emailsid" value="${email.id}"/>
-                        <input type="text" class="emails" name="emails" value="${email.email}">
-                        <a onclick="$.fn.myFunction();" href="#" class="btn btn-danger">Delete</a>
-                        </div>
-                    </div>
-                </c:forEach>
 
-                <%--<div id="email_items"/>
-                <button id="add_email" onclick="">Add</button>--%>
+                <div id="emails">
+                    <c:forEach items="${contact.emails}" var="email">
+                        <div class="email">
+                            <input type="hidden" class="emailsId" name="emailsid" value="${email.id}"/>
+                            <input type="text" class="emails" name="emails" value="${email.email}">
+                            <button type="button" onclick="deleteEmail(this);" class="btn btn-danger">Delete</button>
+                        </div>
+                    </c:forEach>
+                </div>
+
+                <button type="button" class="btn" onclick="addEmail()" >Add Email</button>
             </td>
         </tr>
         <tr>
@@ -84,31 +87,62 @@
 </form>
 
 
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<%--<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script>
 
-    function addInput() {
-        $('#email_items').append('<div><input type="text" name="email"/><input type="button" value="Delete" id="delete"/>');
-    };
-
-    $(document).load(function () {
-        /*var oldemails = document.getElementById('#oldEmails');
-        console.log(typeof oldemails);*/
-
-       /* for(email in oldemails){
-            $('#email_items').append('<div><input type="text" name="email" value="'+email+'"/>' +
-                '<button onclick=" detete()" id="delete">Delete</button>');
-        }*/
-
-       $.fn.addEmail = function(){
-           $(".emails").append("");
-       }
-
-        $.fn.myFunction = function(){
-            $(this).parent("div").delete();
+    var deleteThis = function(){
+            $(this).delete();
         }
 
+
+
+    $(document).load(function () {
+        $('#emails').append('<div class="email"> <input type="text" name="emails"> <button type="button" onclick="$.fn.deleteFunction();" class="btn btn-danger">Delete</button> </div>');
+
+
+        $.fn.addEmail = function(){
+           $('#emails').append('<div class="email"> <input type="text" name="emails"> <button type="button" onclick="$.fn.deleteFunction();" class="btn btn-danger">Delete</button> </div>');
+
+            /*var oldemails = document.getElementById('#oldEmails');
+         console.log(typeof oldemails);*/
+
+            /* for(email in oldemails){
+                 $('#email_items').append('<div><input type="text" name="email" value="'+email+'"/>' +
+                     '<button onclick=" detete()" id="delete">Delete</button>');
+             }*/
+        }
+
+        /*function addInput() {
+       $('#emails').append('<div class="email"> <input type="text" name="emails"> <button type="button" onclick="$.fn.deleteFunction();" class="btn btn-danger">Delete</button> </div>');
+   };*/
+
     });
+
+</script>--%>
+
+<script type='text/javascript'>
+    function addEmail(){
+        // Container <div> where dynamic content will be placed
+        var emails = document.getElementById("emails");
+        // Append a line break
+        var block = document.createElement("div");
+        block.class = "email";
+        // Create an <input> element, set its type and name attributes
+        var input = document.createElement("input");
+        input.type = "email";
+        input.name = "emails";
+        var deleteButton = document.createElement("button");
+        deleteButton.type="button";
+        deleteButton.setAttribute("onClick", "javascript: deleteEmail(this);");
+        deleteButton.innerHTML="Delete";
+        block.appendChild(input);
+        block.appendChild(deleteButton);
+        emails.appendChild(block);
+    }
+
+    function deleteEmail(e) {
+        e.parentNode.parentNode.removeChild(e.parentNode);
+    }
 
 </script>
 
