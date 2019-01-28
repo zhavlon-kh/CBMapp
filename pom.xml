@@ -63,14 +63,54 @@
 		    <artifactId>jstl</artifactId>
 		    <version>1.2</version>
 		</dependency>
+		<dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-context</artifactId>
+            <version>5.1.3.RELEASE</version>
+        </dependency>
+		<dependency>
+			<groupId>javax.validation</groupId>
+			<artifactId>validation-api</artifactId>
+			<version>2.0.1.Final</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-config</artifactId>
+			<version>5.1.2.RELEASE</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-beans</artifactId>
+			<version>5.1.3.RELEASE</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot</artifactId>
+			<version>2.1.1.RELEASE</version>
+		</dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-web</artifactId>
+            <version>5.1.3.RELEASE</version>
+        </dependency>
+		<!--<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>javax.servlet-api</artifactId>
+			<version>3.1.0</version>
+		</dependency>-->
 		<!--<dependency>
 			<groupId>org.thymeleaf</groupId>
 			<artifactId>thymeleaf-spring3</artifactId>
 			<version>3.0.11.RELEASE</version>
 		</dependency>-->
 
+<<<<<<< HEAD
 		<!--If you run project in your tomcat server, disable this dependency -->
 		<dependency>
+=======
+		<!--If you run project in your tomcat server disables this dependency -->
+	 <dependency>
+>>>>>>> f559489e04ddc1855acf8e61559254b5e65ef7ff
 			<groupId>org.apache.tomcat.embed</groupId>
 			<artifactId>tomcat-embed-jasper</artifactId>
 			<scope>provided</scope>

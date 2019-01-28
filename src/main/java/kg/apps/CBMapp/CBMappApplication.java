@@ -8,8 +8,7 @@ import org.springframework.web.servlet.view.InternalResourceViewResolver;
 import org.springframework.web.servlet.view.JstlView;
 
 @SpringBootApplication
-public class CBMappApplication
-{
+public class CBMappApplication {
 	public static void main(String[] args)
 	{
 		SpringApplication.run(CBMappApplication.class, args);

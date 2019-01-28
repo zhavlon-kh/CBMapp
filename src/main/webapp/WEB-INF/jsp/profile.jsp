@@ -17,9 +17,8 @@
 <div class="container">
       <div class="row">
       <div class="col-md-5  toppad  pull-right col-md-offset-3 ">
-         <a href="#" class="btn btn-success">Edit profile</a>
-          
-          <a href="#" class="btn btn-danger">Logout</a>
+         <a href="/editprofile/" class="btn btn-success">Edit profile</a>
+          <a href="/login/" class="btn btn-danger">Logout</a>
 
 
        <br>
@@ -29,52 +28,45 @@
    
           <div class="panel panel-info">
             <div class="panel-heading">
-              <h3 class="panel-title">Username</h3>
+              <h3 class="panel-title">My Profile</h3>
             </div>
             <div class="panel-body">
               <div class="row">
                 <div class="col-md-3 col-lg-3 "> <img alt="User Pic" src="bg-02.jpg" class="img-circle img-responsive"> </div>
-                
-              
+
                 <div class=" col-md-9 col-lg-9 "> 
                   <table class="table table-user-information">
                     <tbody>
                       <tr>
-                        <td>Department:</td>
-                        <td>IT</td>
+                        <td>Username:</td>
+                        <td>${user.username}</td>
                       </tr>
                       <tr>
-                        <td>Hire date:</td>
-                        <td>08/08/2013</td>
+                        <td>Name:</td>
+                        <td>${user.name}</td>
                       </tr>
                       <tr>
-                        <td>Date of Birth</td>
-                        <td>08/06/1997</td>
+                        <td>Surname</td>
+                        <td>${user.surname}</td>
                       </tr>
-                   
-                         <tr>
-                             <tr>
-                        <td>Gender</td>
-                        <td>Female</td>
+                      <tr>
+                        <td>E-mail</td>
+                        <td>${user.email}</td>
                       </tr>
                         <tr>
                         <td>Home Address</td>
-                        <td>Bishkek, Kyrgyzstan</td>
+                        <td>${user.address}</td>
                       </tr>
                       <tr>
-                        <td>Email</td>
-                        <td><a href="mailto:info@support.com">info@gmail.com</a></td>
+                        <td>Phone number</td>
+                        <td>${user.phone}</td>
                       </tr>
-                        <td>Phone Number</td>
-                        <td>555-123-654
-                        </td>
-                           
+                        <td>Active</td>
+                        <td>${user.active}</td>
                       </tr>
-                     
                     </tbody>
                   </table>
-
-                    <a href="/contacts/" class="btn btn-primary">Contacts</a>
+                    <a href="/contacts" class="btn btn-primary">Contacts</a>
                   <a href="#" class="btn btn-primary">Export Contacts</a>
                   <a href="#" class="btn btn-primary">Import Contacts</a>
                 </div>

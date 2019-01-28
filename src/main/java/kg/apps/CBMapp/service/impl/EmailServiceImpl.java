@@ -1,5 +1,6 @@
 package kg.apps.CBMapp.service.impl;
 
+import kg.apps.CBMapp.model.Contact;
 import kg.apps.CBMapp.model.ContactEmail;
 import kg.apps.CBMapp.repository.ContactEmailRepository;
 import kg.apps.CBMapp.service.EmailService;
@@ -22,6 +23,11 @@ public class EmailServiceImpl implements EmailService {
     }
 
     @Override
+    public Set<ContactEmail> selectAllEmailsByContact(Contact contact) {
+        return contactEmailRepository.getAllByContact(contact);
+    }
+
+    @Override
     public void addAllEmails(Set<ContactEmail> contactEmails) {
 
         for (ContactEmail contactEmail:contactEmails){
@@ -34,6 +40,12 @@ public class EmailServiceImpl implements EmailService {
     public void deleteEmail(ContactEmail contactEmail) {
 
         contactEmailRepository.delete(contactEmail);
+
+    }
+
+    @Override
+    public void deleteEmailById(Long emailId) {
+        contactEmailRepository.deleteById(emailId);
 
     }
 }

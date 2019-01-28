@@ -18,17 +18,12 @@ public class ContactMobile {
     @JoinColumn(name = "ContactId")
     private Contact contact;
 
-    @ManyToOne
-    @JoinColumn(name = "MobileTypeId")
-    private ContactMobileType mobileType;
-
     public ContactMobile() {
     }
 
-    public ContactMobile(String phoneNumber, Contact contact, ContactMobileType mobileType) {
+    public ContactMobile(String phoneNumber, Contact contact) {
         this.phoneNumber = phoneNumber;
         this.contact = contact;
-        this.mobileType = mobileType;
     }
 
     public long getId() {
@@ -52,11 +47,4 @@ public class ContactMobile {
         this.contact = contact;
     }
 
-    public ContactMobileType getMobileType() {
-        return mobileType;
-    }
-
-    public void setMobileType(ContactMobileType mobileType) {
-        this.mobileType = mobileType;
-    }
 }
