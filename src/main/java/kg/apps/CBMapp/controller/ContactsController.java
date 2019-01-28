@@ -166,7 +166,7 @@ public class ContactsController {
 
         contactService.addContact(contact);
 
-        return "redirect/contacts:";
+        return "redirect:/contacts";
 
     }
 

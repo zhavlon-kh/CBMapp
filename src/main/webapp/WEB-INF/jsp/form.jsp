@@ -58,7 +58,16 @@
     </script>
 </head>
 <body>
-<h1>Add New Contact</h1>
+<h1>
+    <c:choose>
+        <c:when test="${contact.id==0}">
+            Add New Contact
+        </c:when>
+        <c:otherwise>
+            Edit Contact
+        </c:otherwise>
+    </c:choose>
+</h1>
 
 <form method="post" action="save">
     <table>
@@ -111,7 +120,7 @@
                     </c:forEach>
                 </div>
 
-                <button type="button" class="btn" onclick="addEmail()" >Add Email</button>
+                <button type="button" class="btn btn-info" onclick="addEmail()" >Add Email</button>
 
             </td>
         </tr>
@@ -121,47 +130,8 @@
         </tr>
     </table>
 
-    <%--<div class="container">
-        <div class="myFields"></div>
-        <button id="add_button" class="addNew btn btn-success btn-sm">
-            <span class="fa fa-plus"></span>Add New
-        </button>
-    </div>--%>
 </form>
 
-
-<%--<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-<script>
-
-    var deleteThis = function(){
-            $(this).delete();
-        }
-
-
-
-    $(document).load(function () {
-        $('#emails').append('<div class="email"> <input type="text" name="emails"> <button type="button" onclick="$.fn.deleteFunction();" class="btn btn-danger">Delete</button> </div>');
-
-
-        $.fn.addEmail = function(){
-           $('#emails').append('<div class="email"> <input type="text" name="emails"> <button type="button" onclick="$.fn.deleteFunction();" class="btn btn-danger">Delete</button> </div>');
-
-            /*var oldemails = document.getElementById('#oldEmails');
-         console.log(typeof oldemails);*/
-
-            /* for(email in oldemails){
-                 $('#email_items').append('<div><input type="text" name="email" value="'+email+'"/>' +
-                     '<button onclick=" detete()" id="delete">Delete</button>');
-             }*/
-        }
-
-        /*function addInput() {
-       $('#emails').append('<div class="email"> <input type="text" name="emails"> <button type="button" onclick="$.fn.deleteFunction();" class="btn btn-danger">Delete</button> </div>');
-   };*/
-
-    });
-
-</script>--%>
 
 <script type='text/javascript'>
     function addEmail(){
@@ -169,16 +139,18 @@
         var emails = document.getElementById("emails");
         // Append a line break
         var block = document.createElement("div");
-        block.class = "email";
+        block.setAttribute("class","email");
         // Create an <input> element, set its type and name attributes
         var input = document.createElement("input");
         input.type = "email";
         input.name = "emails";
         var deleteButton = document.createElement("button");
         deleteButton.type="button";
+        deleteButton.setAttribute("class","btn btn-danger");
         deleteButton.setAttribute("onClick", "javascript: deleteEmail(this);");
         deleteButton.innerHTML="Delete";
         block.appendChild(input);
+        block.innerHTML += '&nbsp;';
         block.appendChild(deleteButton);
         emails.appendChild(block);
     }
