@@ -75,7 +75,7 @@ public class MainController
 
     }
 
-    /*@RequestMapping(value="/save", method= RequestMethod.POST)
+    @RequestMapping(value="/save", method= RequestMethod.POST)
     public String getUserEdit(HttpServletRequest request)
     {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -92,7 +92,7 @@ public class MainController
         userService.registerNewUser(userForEdit);
 
         return "redirect:/login";
-    }*/
+    }
 
     @RequestMapping(value = "/delete/{id}")
     public String deleteUser(@PathVariable String id){
