@@ -43,24 +43,4 @@
     </table>
 </div>
 </body>
-<script>
-
-    $(document).on('click', '#delete_btn', function(){
-
-        if (confirm("Are you sure you want to delete this task?")) {
-
-            var taskId = $('#task_form').find('input[name="id"]').val();
-            $.ajax({
-                type: "GET",
-                url: "<c:url value='/contacts/deleteTask/"+ contactId +"' />",
-                success: function(){
-                    $('#dialog').dialog('close');
-                    $('#calendar').fullCalendar('removeEvents', taskId);
-                }
-            });
-        }
-    })
-</script>
-
-
 </html>
