@@ -8,9 +8,12 @@
 <div>
     <h1>Contacts</h1>
     <div><a href="/contacts/form">Create New Contact</a></div>
-    <table border="0">
+
+    <c:if test="${contacts.size()>0}">
+    <form action="exportordelete" method="post">
+    <table border="1">
         <tr>
-            <th><input type="checkbox"></th>
+            <th></th>
             <th>Name</th>
             <th>Surname</th>
             <th>Nickname</th>
@@ -20,27 +23,34 @@
             <th></th>
             <th></th>
         </tr>
+
+
         <c:forEach items="${contacts}" var="contact">
             <tr>
-                <td><input name="selectedcontactsid" type="checkbox" value="${contact.id}"></td>
+                <td><input type="checkbox" name="selectedId" value="${contact.id}"></td>
                 <td>${contact.name}</td>
                 <td>${contact.surname}</td>
                 <td>${contact.nickname}</td>
-                <td>${contact.birthday.toString()}</td>
+                <td>${dateFormat.format(contact.birthday)}</td>
+
                 <td><c:forEach items="${contact.mobiles}" var="mobile">
-                    ${mobile.phoneNumber} ${mobile.mobileType} <br/>
+                    <ul>${mobile.phoneNumber}</ul>
                 </c:forEach></td>
+
                 <td><c:forEach items="${contact.emails}" var="email">
-                    ${email.email} <br/>
-                    <div class="btn-group">
-                        <button type="button" class="btn btn-lg" id="delete_btn">Delete</button>
-                    </div>
+                    <ul>${email.email}</ul>
                 </c:forEach></td>
+
                 <td><a href="/contacts/edit/${contact.id}">Edit</a></td>
                 <td><a href="/contacts/delete/${contact.id}">Delete</a></td>
             </tr>
         </c:forEach>
     </table>
+        <br>
+        <button name="delete" value="delete">Delete</button>
+        <button name="export" value="export">Export Contacts</button>
+    </form>
+    </c:if>
 </div>
 </body>
 </html>

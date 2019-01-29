@@ -17,6 +17,10 @@ public interface UserService extends UserDetailsService {
 
     void deleteUserById(int userId);
 
+    void deleteUser(User user);
+
     User getUserById(int userId);
+
+    User getCurrentUser();
 
 }
