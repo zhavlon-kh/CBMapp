@@ -49,11 +49,9 @@ public class MainController
 
     }
 
-<<<<<<< HEAD
-    @RequestMapping(value="editprofile/save", method= RequestMethod.POST)
-=======
+
     @RequestMapping(value="/editprofile/save", method= RequestMethod.POST)
->>>>>>> 1146c1e3aef796d2062c60a77f82004873b4f180
+
     public String getUserEdit(HttpServletRequest request)
     {
         User userForEdit=userService.getCurrentUser();
