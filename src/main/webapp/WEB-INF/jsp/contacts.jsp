@@ -369,8 +369,8 @@
         ${email.email} <br/>
     </c:forEach></td>
     <td>
-        <a href="/contacts/edit/${contact.id}" class="edit" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a>
-        <input type="button" value="Open a Popup Window" onclick="window.open('/contacts/edit/${contact.id}','popUpWindow','height=500,width=400,left=100,top=100,resizable=yes,scrollbars=yes,toolbar=yes,menubar=no,location=no,directories=no, status=yes');">
+       <!--<a href="/contacts/edit/${contact.id}" class="edit" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a>-->
+        <input type="button" value="Edit" class="btn btn-succeess" onclick="window.open('/contacts/edit/${contact.id}','popUpWindow','height=500,width=400,left=100,top=100,resizable=yes,scrollbars=yes,toolbar=yes,menubar=no,location=no,directories=no, status=yes');">
         <a href="/contacts/delete/${contact.id}" class="delete" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Delete">&#xE872;</i></a>
     </td>
     </tr>
