@@ -4,6 +4,8 @@ import kg.apps.CBMapp.model.Contact;
 import kg.apps.CBMapp.security.CustomUserDetails;
 import kg.apps.CBMapp.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
@@ -19,22 +21,23 @@ import java.util.Optional;
 public class UserServiceImpl implements UserService
 {
     @Autowired
-    private UserRepository usersRepository;
+    private UserRepository userRepository;
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException
     {
-        Optional<User> optionalUsers = usersRepository.findByUsername(username);
+        Optional<User> optionalUsers = userRepository.findByUsername(username);
 
         optionalUsers
                 .orElseThrow(() -> new UsernameNotFoundException("Username not found"));
         return optionalUsers
                 .map(CustomUserDetails::new).get();
     }
-    
+
+    @Override
     public void registerNewUser(User newUser)
     {
-    	usersRepository.save(newUser);
+    	userRepository.save(newUser);
     }
 
 
@@ -45,5 +48,39 @@ public class UserServiceImpl implements UserService
         userContacts.addAll(user.getContacts());
 
         return userContacts;
+    }
+
+
+
+    @Override
+    public void deleteUserById(int userId) {
+
+        userRepository.deleteById(userId);
+    }
+
+    @Override
+    public User getUserById(int userId) {
+        Optional<User> userOptional = userRepository.findById(userId);
+        return userOptional.get();
+    }
+
+    @Override
+    public User getCurrentUser() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+        Optional<User> userOptional = userRepository.findByUsername(authentication.getName());
+
+        User user = userOptional.get();
+
+        return user;
+    }
+
+    @Override
+    public void deleteUser(User user) {
+
+
+
+        userRepository.delete(user);
+
     }
 }

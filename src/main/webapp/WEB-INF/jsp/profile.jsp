@@ -17,10 +17,15 @@
 <div class="container">
       <div class="row">
       <div class="col-md-5  toppad  pull-right col-md-offset-3 ">
+
+
+         <!--<a href="/profile/editprofile/" class="btn btn-success">Edit profile</a>
+          <a href="/login/" class="btn btn-danger">Logout</a>-->
+
+
          <a href="/editprofile/" class="btn btn-success">Edit profile</a>
           <a href="/login/" class="btn btn-danger">Logout</a>
-
-
+         <!-- <a href="/login/" class="btn btn-danger">Logout</a>-->
        <br>
       </div>
         <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xs-offset-0 col-sm-offset-0 col-md-offset-3 col-lg-offset-3 toppad" >
@@ -73,10 +78,12 @@
               </div>
             </div>
                  <div class="panel-footer">
+
                         <a data-original-title="Broadcast Message" data-toggle="tooltip" type="button" class="btn btn-sm btn-primary"><i class="glyphicon glyphicon-envelope"></i></a>
                         <span class="pull-right">
-                            <a href="edit.html" data-original-title="Edit this user" data-toggle="tooltip" type="button" class="btn btn-sm btn-warning"><i class="glyphicon glyphicon-edit"></i></a>
-                            <a data-original-title="Remove this user" data-toggle="tooltip" type="button" class="btn btn-sm btn-danger"><i class="glyphicon glyphicon-remove"></i></a>
+                            <!--<a href="edit.html" data-original-title="Edit this user" data-toggle="tooltip" type="button" class="btn btn-sm btn-warning"><i class="glyphicon glyphicon-edit"></i></a>-->
+                            <!--<a data-original-title="Remove this user" data-toggle="tooltip" type="button" class="btn btn-sm btn-danger"><i class="glyphicon glyphicon-remove"></i></a>-->
+                            <a href="/index" class="btn btn-primary">Home</a>
                         </span>
                     </div>
             
