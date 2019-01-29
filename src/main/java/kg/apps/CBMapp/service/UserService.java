@@ -11,5 +11,12 @@ import java.util.List;
 @Service
 public interface UserService extends UserDetailsService {
 
+    void registerNewUser(User newUser);
+
     List<Contact> userContacts(User user);
+
+    void deleteUserById(int userId);
+
+    User getUserById(int userId);
+
 }

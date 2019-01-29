@@ -19,7 +19,7 @@ import java.util.*;
 import java.text.SimpleDateFormat;
 
 @Controller
-@RequestMapping(value = {"contacts"})
+@RequestMapping(value = {"/contacts"})
 public class ContactsController {
 
     @Autowired
@@ -57,6 +57,7 @@ public class ContactsController {
 
         Set<ContactEmail> emails = new HashSet<>();
         Set<ContactMobile> mobiles = new HashSet<>();
+
         Contact contact = new Contact();
         String idStr =request.getParameter("id");
         Long id = Long.parseLong(idStr);
@@ -102,6 +103,37 @@ public class ContactsController {
                 emailsId.add(Long.parseLong(emailId));
 
             }
+
+        //TODO: get emails
+        if (!Objects.isNull(request.getParameterValues("emails"))) {
+            List<String> emailsString = Arrays.asList(request.getParameterValues("emails"));
+
+            if (!Objects.isNull(request.getParameterValues("emailsid"))){
+
+                String[] emailsIdStr= request.getParameterValues("emailsid");
+                List<Long> emailsId=new ArrayList<>();
+
+                for (String emailId: emailsIdStr){
+                    emailsId.add(Long.parseLong(emailId));
+                }
+
+                int i;
+
+                for (i=0;i<emailsString.size();i++){
+                    ContactEmail contactEmail = new ContactEmail();
+
+                    if (!Objects.isNull(emailsId.get(i))){
+                        contactEmail.setId(emailsId.get(i));
+                    }
+
+                    contactEmail.setEmail(emailsString.get(i));
+
+                    emails.add(contactEmail);
+                }
+
+                contact.setEmails(emails);
+            }
+
         }
 
         for (int k=0; k<emailsString.size(); k++){

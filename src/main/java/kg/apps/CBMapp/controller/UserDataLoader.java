@@ -2,10 +2,12 @@ package kg.apps.CBMapp.controller;
 
 import kg.apps.CBMapp.model.Contact;
 import kg.apps.CBMapp.model.ContactEmail;
+
 import kg.apps.CBMapp.model.ContactMobile;
 import kg.apps.CBMapp.model.User;
 import kg.apps.CBMapp.repository.ContactEmailRepository;
 import kg.apps.CBMapp.repository.ContactMobileRepository;
+
 import kg.apps.CBMapp.repository.ContactRepository;
 import kg.apps.CBMapp.service.impl.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,6 +32,7 @@ public class UserDataLoader {
     private ContactEmailRepository emailRepository;
     @Autowired
     private ContactMobileRepository mobileRepository;
+
 
     private User user=new User();
     private User user2=new User();
@@ -68,13 +71,11 @@ public class UserDataLoader {
 
         userService.registerNewUser(user);
         userService.registerNewUser(user2);
-
     }
 
 
 
     private void loadContacts() {
-        //user = userOptional.get();
 
         contact1 = new Contact("Contact1", "Contact1", "Con1", "Comp1",
                 Date.from(Instant.now()), user, null, null);
@@ -97,7 +98,6 @@ public class UserDataLoader {
         email2=new ContactEmail("contact2@gmail.com",contact2);
         email3=new ContactEmail("contact3@gmail.com",contact3);
         email4=new ContactEmail("contact1-second@gmail.com",contact1);
-
 
         emailRepository.save(email1);
         emailRepository.save(email2);

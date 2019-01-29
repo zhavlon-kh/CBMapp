@@ -82,6 +82,7 @@
 
             <td>
 
+
                 <%--Here, dont add spaces or newline between [div emails], [c:foreach], and [div email] --%>
                 <%--otherwise the javascript function checkIn() does not work--%>
                 <div id="emails"><c:forEach items="${contact.emails}" var="email"><div class="email">
@@ -163,6 +164,5 @@
     });
 
 </script>
-
 </body>
 </html>
