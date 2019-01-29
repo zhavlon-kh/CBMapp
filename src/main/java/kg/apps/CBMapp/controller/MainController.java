@@ -75,7 +75,7 @@ public class MainController
 
     }
 
-    @RequestMapping(value="/save", method= RequestMethod.POST)
+    @RequestMapping(value="editprofile/save", method= RequestMethod.POST)
     public String getUserEdit(HttpServletRequest request)
     {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
