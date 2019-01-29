@@ -2,9 +2,8 @@ package kg.apps.CBMapp.controller;
 
 import javax.servlet.http.HttpServletRequest;
 
-import kg.apps.CBMapp.security.CustomUserDetails;
+import kg.apps.CBMapp.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -20,11 +19,19 @@ public class LoginController
 {
 	@Autowired
     private UserServiceImpl userDetailsService;
+
+	@Autowired
+	private UserService userService;
 	
 	@RequestMapping(value = {"", "/", "/login"}, method = RequestMethod.GET)
 	public String getLoginPage()
 	{
-		return "login";
+		try {
+			User user = userService.getCurrentUser();
+			return "index";
+		} catch (Exception e){
+			return "login";
+		}
 	}
 	
 	@RequestMapping(value = "/signup", method = RequestMethod.POST)
@@ -42,10 +49,6 @@ public class LoginController
 		{
 			try
 			{
-				/*Set<Role> roleSet = new HashSet<Role>();
-				Role role = new Role();
-				role.setRole(usertype);
-				roleSet.add(role);*/
 				
 				User newUser = new User();
 				newUser.setName(name);

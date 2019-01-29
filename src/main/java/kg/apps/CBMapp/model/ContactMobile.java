@@ -1,6 +1,8 @@
 package kg.apps.CBMapp.model;
 
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import javax.persistence.*;
 
 @Entity
@@ -16,6 +18,7 @@ public class ContactMobile {
     //Foreign Keys
     @ManyToOne
     @JoinColumn(name = "ContactId")
+    @JsonManagedReference
     private Contact contact;
 
     public ContactMobile() {
@@ -50,4 +53,8 @@ public class ContactMobile {
         this.contact = contact;
     }
 
+    @Override
+    public String toString() {
+        return '\'' + phoneNumber + '\'';
+    }
 }
