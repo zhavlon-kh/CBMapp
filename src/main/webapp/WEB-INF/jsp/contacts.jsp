@@ -11,7 +11,8 @@
     <h1>Contacts</h1>
     <div><a href="/contacts/form">Create New Contact</a></div>
 
-    <form action="exportOrDelete">
+    <c:if test="${contacts.size()>0}">
+    <form action="exportordelete" method="post">
     <table border="1">
         <tr>
             <th></th>
@@ -35,22 +36,23 @@
                 <td>${dateFormat.format(contact.birthday)}</td>
 
                 <td><c:forEach items="${contact.mobiles}" var="mobile">
-                    ${mobile.phoneNumber} <br/>
+                    <ul>${mobile.phoneNumber}</ul>
                 </c:forEach></td>
 
                 <td><c:forEach items="${contact.emails}" var="email">
-                    ${email.email} <br/>
+                    <ul>${email.email}</ul>
                 </c:forEach></td>
 
                 <td><a href="/contacts/edit/${contact.id}">Edit</a></td>
                 <td><a href="/contacts/delete/${contact.id}">Delete</a></td>
             </tr>
         </c:forEach>
+    </table>
         <br>
         <button name="delete" value="delete">Delete</button>
         <button name="export" value="export">Export Contacts</button>
-    </table>
     </form>
+    </c:if>
 </div>
 </body>
 </html>

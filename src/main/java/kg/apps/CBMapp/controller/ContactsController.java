@@ -2,8 +2,10 @@ package kg.apps.CBMapp.controller;
 
 import kg.apps.CBMapp.model.Contact;
 import kg.apps.CBMapp.model.ContactEmail;
+import kg.apps.CBMapp.model.ContactMobile;
 import kg.apps.CBMapp.service.ContactService;
 import kg.apps.CBMapp.service.EmailService;
+import kg.apps.CBMapp.service.MobileService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -24,8 +26,10 @@ public class ContactsController {
     ContactService contactService;
 
     @Autowired
-
     private EmailService emailService;
+
+    @Autowired
+    private MobileService mobileService;
 
     SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
     SimpleDateFormat dateFormat2 =new SimpleDateFormat("dd-MMMMM-yyyy");
@@ -52,6 +56,7 @@ public class ContactsController {
     public String saveContact(HttpServletRequest request) {
 
         Set<ContactEmail> emails = new HashSet<>();
+        Set<ContactMobile> mobiles = new HashSet<>();
         Contact contact = new Contact();
         String idStr =request.getParameter("id");
         Long id = Long.parseLong(idStr);
@@ -89,8 +94,6 @@ public class ContactsController {
         ArrayList<String> emailsString = new  ArrayList<>();
         emailsString.addAll(Arrays.asList(request.getParameterValues("emails")));
 
-        Set<Integer> dltdIndx=new HashSet<>();
-
 
 
         if (!Objects.isNull(request.getParameterValues("emailsid"))){
@@ -106,7 +109,6 @@ public class ContactsController {
                 if (emailsId.size()>k)
                     emailsId.remove(k);
                 emailsString.remove(k);
-                dltdIndx.add(k);
             }
         }
 
@@ -124,8 +126,6 @@ public class ContactsController {
 
             }
         }
-
-        Set<ContactEmail> emailsAfterDeleted =emailService.selectAllEmailsByContact(contact);
 
 
         if (!Objects.isNull(emailsString)) {
@@ -158,11 +158,73 @@ public class ContactsController {
 
         }
 
+    //Managing Mobiles
+        //TODO: mobile Validator;
 
-        //TODO: contact.setMobile();
+        Set<ContactMobile> contactMobiles =mobileService.selectAllMobilesByContact(contact);
+        ArrayList<Long> mobilesId=new ArrayList<>();
+        ArrayList<String> mobilesString = new  ArrayList<>();
+        mobilesString.addAll(Arrays.asList(request.getParameterValues("mobiles")));
+
+        if (!Objects.isNull(request.getParameterValues("mobilesid"))){
+            String[] mobilesIdStr= request.getParameterValues("mobilesid");
+            for (String mobileId: mobilesIdStr){
+                mobilesId.add(Long.parseLong(mobileId));
+            }
+        }
+
+        for (int k=0; k<mobilesString.size(); k++){
+            if (mobilesString.get(k)==""){
+                if (mobilesId.size()>k)
+                    mobilesId.remove(k);
+                mobilesString.remove(k);
+            }
+        }
+
+        //Checking for deleted old data, if deleted we must delete it from mobiles too...
+        if (mobilesId.size()<contactMobiles.size()){
+            for (ContactMobile mobile: contactMobiles){
+                boolean deleted =true;
+                for (Long mobileId:mobilesId ){
+                    if (mobileId==mobile.getId()){
+                        deleted=false;
+                    }
+                }
+                if (deleted){
+                    mobileService.deleteMobileById(mobile.getId());
+                }
+
+            }
+        }
+
+        if (!Objects.isNull(mobilesString)) {
+            int i;
+            for (i=0;i<mobilesString.size();i++){
 
 
+                if((!Objects.isNull(mobilesString.get(i)) && mobilesString.get(i)!="")){
+                    ContactMobile contactMobile = new ContactMobile();
 
+                    if (mobilesId.size()>i){
+                        contactMobile.setId(mobilesId.get(i));
+                    }
+
+                    contactMobile.setContact(contact);
+
+                    String stringMobile = mobilesString.get(i);
+
+                    contactMobile.setPhoneNumber(stringMobile);
+
+                    mobileService.addMobile(contactMobile);
+
+                    mobiles.add(contactMobile);
+                }
+
+            }
+
+            contact.setMobiles(mobiles);
+
+        }
 
         contactService.addContact(contact);
 

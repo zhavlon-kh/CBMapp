@@ -104,13 +104,9 @@
 			<version>3.0.11.RELEASE</version>
 		</dependency>-->
 
-<<<<<<< HEAD
-		<!--If you run project in your tomcat server, disable this dependency -->
-		<dependency>
-=======
+
 		<!--If you run project in your tomcat server disables this dependency -->
 	 <dependency>
->>>>>>> f559489e04ddc1855acf8e61559254b5e65ef7ff
 			<groupId>org.apache.tomcat.embed</groupId>
 			<artifactId>tomcat-embed-jasper</artifactId>
 			<scope>provided</scope>
