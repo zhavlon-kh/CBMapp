@@ -55,9 +55,6 @@ public class FileServiceImpl implements FileService
     @Override
     public JSONArray getContactsAsJsonArrayByIds(Set<Long> idSet) {
 
-
-
-
         return null;
     }
 }

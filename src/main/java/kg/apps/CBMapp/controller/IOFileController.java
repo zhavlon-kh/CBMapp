@@ -20,7 +20,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-//@Controller
+@Controller
 public class IOFileController {
 
 
@@ -31,7 +31,7 @@ public class IOFileController {
     @Autowired
     private FileService fileService;
 
-    /*@RequestMapping("/expall")
+    @RequestMapping("/expall")
     public ResponseEntity<Object> exportAllUserContacts(HttpServletResponse response) throws Exception {
 
         String username = userService.getCurrentUser().getUsername();
@@ -42,6 +42,7 @@ public class IOFileController {
 
         String jsonString = fileService.getAllUserContactsAsJsonArray().toString();
         writer.write(jsonString);
+        writer.close();
 
 
         try {
@@ -65,33 +66,11 @@ public class IOFileController {
         } catch (FileNotFoundException e) {
             return new ResponseEntity<>("error occurred", HttpStatus.INTERNAL_SERVER_ERROR);
         } finally {
-            if (file.exists()) file.delete();
+            //if (file.exists()) file.delete();
             writer.close();
         }
 
     }
 
-
-    @Autowired
-    ContactRepository contactRepository;
-
-    @RequestMapping("/train")
-    @ResponseBody
-    public String training() throws Exception {
-
-        Set<Long> idSet = new HashSet<>();
-        List<Contact> contacts = userService.getUserContacts(userService.getCurrentUser());
-
-        for (Contact contact :
-                contacts) {
-            idSet.add(contact.getId());
-        }
-
-        List<Contact> cont = contactRepository.findAll(idSet);
-
-        return cont.toString();
-
-        //return fileService.getContactsAsJsonArrayByIds(idSet).toString();
-    }*/
 
 }

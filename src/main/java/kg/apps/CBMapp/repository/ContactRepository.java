@@ -18,5 +18,4 @@ public interface ContactRepository extends JpaRepository<Contact,Long> {
 
     List<Contact> findBySurnameStartsWithIgnoreCase(String surname);
 
-    List<Contact> findAll(Set<Long> idSet);
 }
