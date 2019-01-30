@@ -25,7 +25,7 @@ public class Contact {
     private Date birthday;
 
     @ManyToOne
-    @JoinColumn//(name = "ContactBookId")
+    @JoinColumn
     @JsonBackReference
     private User user;
 

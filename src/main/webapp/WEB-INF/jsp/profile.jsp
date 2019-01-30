@@ -21,19 +21,20 @@
 
          <!--<a href="/profile/editprofile/" class="btn btn-success">Edit profile</a>
           <a href="/login/" class="btn btn-danger">Logout</a>-->
-
-
-         <a href="/editprofile/" class="btn btn-success">Edit profile</a>
-          <a href="/login/" class="btn btn-danger">Logout</a>
          <!-- <a href="/login/" class="btn btn-danger">Logout</a>-->
        <br>
       </div>
         <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xs-offset-0 col-sm-offset-0 col-md-offset-3 col-lg-offset-3 toppad" >
    
-   
           <div class="panel panel-info">
             <div class="panel-heading">
-              <h3 class="panel-title">My Profile</h3>
+
+                <div><h2 class="panel-title">My Profile</h2></div>
+                <div>
+                    <a href="/index" class="btn btn-primary"><span>Home</span></a>
+                    <a href="/editprofile/" class="btn btn-success"><span>Edit profile</span></a>
+                    <a href="/logout" class="btn btn-danger"><span>Logout</span></a>
+                </div>
             </div>
             <div class="panel-body">
               <div class="row">
@@ -66,24 +67,18 @@
                         <td>Phone number</td>
                         <td>${user.phone}</td>
                       </tr>
-                        <td>Active</td>
-                        <td>${user.active}</td>
-                      </tr>
                     </tbody>
                   </table>
                     <a href="/contacts" class="btn btn-primary">Contacts</a>
                   <a href="/expall" class="btn btn-primary">Export Contacts</a>
-                  <a href="#" class="btn btn-primary">Import Contacts</a>
+                  <a href="/import" class="btn btn-primary">Import Contacts</a>
                 </div>
               </div>
             </div>
                  <div class="panel-footer">
 
-                        <a data-original-title="Broadcast Message" data-toggle="tooltip" type="button" class="btn btn-sm btn-primary"><i class="glyphicon glyphicon-envelope"></i></a>
                         <span class="pull-right">
-                            <!--<a href="edit.html" data-original-title="Edit this user" data-toggle="tooltip" type="button" class="btn btn-sm btn-warning"><i class="glyphicon glyphicon-edit"></i></a>-->
-                            <!--<a data-original-title="Remove this user" data-toggle="tooltip" type="button" class="btn btn-sm btn-danger"><i class="glyphicon glyphicon-remove"></i></a>-->
-                            <a href="/index" class="btn btn-primary">Home</a>
+
                         </span>
                     </div>
             

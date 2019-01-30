@@ -68,7 +68,6 @@ public class IOFileController {
         } catch (FileNotFoundException e) {
             return new ResponseEntity<>("error occurred", HttpStatus.INTERNAL_SERVER_ERROR);
         } finally {
-            //if (file.exists()) file.delete();
             writer.close();
         }
 

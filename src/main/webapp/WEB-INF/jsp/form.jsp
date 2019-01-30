@@ -97,7 +97,7 @@
         <tr>
             <td> </td>
 
-            <td><button type="submit" class="btn btn-success"><i class="far fa-save"></i> Save</button> <a class="btn btn-warning" href="/contacts/">Cancel</a></td>
+            <td><button type="submit" class="btn btn-success"><i class="far fa-save"></i> Save</button> <a class="btn btn-warning" href="/contacts/save">Cancel</a></td>
 
         </tr>
     </table>

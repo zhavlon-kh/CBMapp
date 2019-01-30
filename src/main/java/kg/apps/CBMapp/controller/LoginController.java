@@ -43,8 +43,7 @@ public class LoginController
 		String username = request.getParameter("username");
 		String password1 = request.getParameter("password1");
 		String password2 = request.getParameter("password2");
-		//String usertype = request.getParameter("usertype");
-		
+
 		if(password1 != null && password2 != null && password1.equals(password2))
 		{
 			try
@@ -56,8 +55,7 @@ public class LoginController
 				newUser.setEmail(email);
 				newUser.setUsername(username);
 				newUser.setPassword(password1);
-				//newUser.setRoles(roleSet);
-				
+
 				userDetailsService.registerNewUser(newUser);
 			}
 			catch(Exception e)

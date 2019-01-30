@@ -323,10 +323,10 @@
             <h2>User <b>Contacts</b></h2>
         </div>
         <div class="col-sm-6">
-            <a href="/contacts/form" class="btn btn-success" data-toggle="modal"><i class="material-icons">&#xE147;</i> <span>Add New Contact</span></a>
-            <a href="/contacts/form" class="btn btn-danger" data-toggle="modal"> <span>Edit Contact</span></a>
-            <a href="/login" class="btn btn-primary" data-toggle="modal"> <span>Logout</span></a>
-        </div>
+            <a href="/logout" class="btn btn-danger" data-toggle="modal"> <span>Logout</span></a>
+            <a href="/index" class="btn btn-primary" data-toggle="modal"> <span>Home</span></a>
+            <a href="/import" class="btn btn-primary" data-toggle="modal"> <span>Import</span></a>
+            <a href="/contacts/form" class="btn btn-success" data-toggle="modal"><i class="material-icons">&#xE147;</i> <span>Add New Contact</span></a>        </div>
     </div>
 </div>
 <table class="table table-striped table-hover">
@@ -369,8 +369,7 @@
         ${email.email} <br/>
     </c:forEach></td>
     <td>
-       <!--<a href="/contacts/edit/${contact.id}" class="edit" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a>-->
-        <input type="button" value="Edit" class="btn btn-succeess" onclick="window.open('/contacts/edit/${contact.id}','popUpWindow','height=500,width=400,left=100,top=100,resizable=yes,scrollbars=yes,toolbar=yes,menubar=no,location=no,directories=no, status=yes');">
+       <a href="/contacts/edit/${contact.id}" class="edit" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a>
         <a href="/contacts/delete/${contact.id}" class="delete" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Delete">&#xE872;</i></a>
     </td>
     </tr>
