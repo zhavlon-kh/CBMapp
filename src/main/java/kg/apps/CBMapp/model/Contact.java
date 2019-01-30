@@ -23,7 +23,7 @@ public class Contact {
     @JoinColumn//(name = "ContactBookId")
     private User user;
 
-    @OneToMany(mappedBy = "contact", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "contact",fetch = FetchType.EAGER)
     private Set<ContactMobile> mobiles;
 
     @OneToMany(mappedBy = "contact", fetch = FetchType.EAGER)

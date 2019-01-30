@@ -96,7 +96,9 @@
         </tr>
         <tr>
             <td> </td>
-            <td><button type="submit" class="btn btn-success" onclick="closeSelf()"><i class="far fa-save"></i> Save</button> <a class="btn btn-warning" href="/contacts/" onclick="cancel()">Cancel</a></td>
+
+            <td><button type="submit" class="btn btn-success"><i class="far fa-save"></i> Save</button> <a class="btn btn-warning" href="/contacts/">Cancel</a></td>
+
         </tr>
     </table>
 
@@ -156,18 +158,6 @@
         if (mobiles.innerHTML===""){
             addMobile();
         }
-    }
-
-
-    function closeSelf(){
-        // do something
-            alert("Contact successfully saved!");
-            document.forms['certform'].submit();
-            window.close();
-    }
-
-    function cancel(){
-        window.close();
     }
 
     document.addEventListener("DOMContentLoaded",function (evt) {

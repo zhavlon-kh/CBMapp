@@ -7,12 +7,13 @@ import javax.persistence.*;
 public class ContactEmail {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
     private String email;
 
     @ManyToOne
+    @JoinColumn
     private Contact contact;
 
     public ContactEmail() {

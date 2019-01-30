@@ -1,3 +1,5 @@
+/src/main/resources/application.properties
+/src/main/java/kg/apps/CBMapp/ServletInitializer.java
 .pom.xml
 /target/
 !.mvn/wrapper/maven-wrapper.jar

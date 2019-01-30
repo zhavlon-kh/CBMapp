@@ -88,7 +88,7 @@
                             <button type="save" class="btn btn-primary">Save</button>
                             <!--<button type="reset" class="btn btn-warning">Cancel</button> -->
                             <a href="/profile" class="btn btn-warning"> Cancel </a>
-                            <a href="/profile/delete/${user.id}" class="btn btn-danger">Delete</a>
+                            <a href="/profile/delete" class="btn btn-danger">Delete</a>
                         </div>
                     </div>
                 </form>
