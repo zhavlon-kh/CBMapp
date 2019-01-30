@@ -1,5 +1,8 @@
 package kg.apps.CBMapp.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import java.util.Collection;
 
 import javax.persistence.*;
@@ -12,7 +15,7 @@ public class User
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
 
-    @Column(name = "username", nullable = false)
+    @Column(name = "username", nullable = false, unique = true)
     private String username;
 
     @Column(name = "password", nullable = false)
@@ -33,12 +36,10 @@ public class User
 
     @Column(name = "active")
     private int active;
-    
-    /*@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    @JoinTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
-    private Set<Role> roles;*/
+
 
     @OneToMany(mappedBy = "user")
+    @JsonManagedReference
     private Collection<Contact> contacts;
 
     public User() {
@@ -131,12 +132,6 @@ public class User
         this.contacts = contacts;
     }
 
-    /*public Set<Role> getRoles() {
-        return roles;
-    }
 
-    public void setRoles(Set<Role> roles) {
-        this.roles = roles;
-    }*/
 }
 

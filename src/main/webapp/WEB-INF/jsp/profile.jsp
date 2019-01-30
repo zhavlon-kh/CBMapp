@@ -72,7 +72,7 @@
                     </tbody>
                   </table>
                     <a href="/contacts" class="btn btn-primary">Contacts</a>
-                  <a href="#" class="btn btn-primary">Export Contacts</a>
+                  <a href="/expall" class="btn btn-primary">Export Contacts</a>
                   <a href="#" class="btn btn-primary">Import Contacts</a>
                 </div>
               </div>

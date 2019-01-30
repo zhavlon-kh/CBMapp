@@ -40,9 +40,8 @@ public class UserServiceImpl implements UserService
     	userRepository.save(newUser);
     }
 
-
     @Override
-    public List<Contact> userContacts(User user) {
+    public List<Contact> getUserContacts(User user) {
 
         List<Contact> userContacts = new ArrayList<>();
         userContacts.addAll(user.getContacts());

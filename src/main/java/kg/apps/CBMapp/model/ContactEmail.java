@@ -1,5 +1,8 @@
 package kg.apps.CBMapp.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import javax.persistence.*;
 
 @Entity
@@ -14,6 +17,7 @@ public class ContactEmail {
 
     @ManyToOne
     @JoinColumn
+    @JsonBackReference
     private Contact contact;
 
     public ContactEmail() {
@@ -46,5 +50,10 @@ public class ContactEmail {
 
     public void setContact(Contact contact) {
         this.contact = contact;
+    }
+
+    @Override
+    public String toString() {
+        return '\'' + email + '\'';
     }
 }

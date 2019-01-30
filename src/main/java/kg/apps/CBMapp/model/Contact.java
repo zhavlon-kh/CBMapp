@@ -1,5 +1,8 @@
 package kg.apps.CBMapp.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import javax.persistence.*;
 import java.util.Date;
 import java.util.List;
@@ -21,12 +24,15 @@ public class Contact {
 
     @ManyToOne
     @JoinColumn//(name = "ContactBookId")
+    @JsonBackReference
     private User user;
 
     @OneToMany(mappedBy = "contact",fetch = FetchType.EAGER)
+    @JsonManagedReference
     private Set<ContactMobile> mobiles;
 
     @OneToMany(mappedBy = "contact", fetch = FetchType.EAGER)
+    @JsonManagedReference
     private Set<ContactEmail> emails;
 
     public Contact() {
@@ -124,5 +130,18 @@ public class Contact {
 
     public void setEmails(Set<ContactEmail> emails) {
         this.emails = emails;
+    }
+
+    @Override
+    public String toString() {
+        return "{" +
+                "name='" + name + '\'' +
+                ", surname='" + surname + '\'' +
+                ", nickname='" + nickname + '\'' +
+                ", company='" + company + '\'' +
+                ", birthday=" + birthday +
+                ", mobiles=" + mobiles +
+                ", emails=" + emails +
+                '}';
     }
 }

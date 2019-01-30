@@ -6,6 +6,7 @@ import kg.apps.CBMapp.model.ContactMobile;
 import kg.apps.CBMapp.service.ContactService;
 import kg.apps.CBMapp.service.EmailService;
 import kg.apps.CBMapp.service.MobileService;
+import kg.apps.CBMapp.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -31,6 +32,9 @@ public class ContactsController {
     @Autowired
     private MobileService mobileService;
 
+    @Autowired
+    private UserService userService;
+
     SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
     SimpleDateFormat dateFormat2 =new SimpleDateFormat("dd-MMMMM-yyyy");
 
@@ -40,7 +44,7 @@ public class ContactsController {
     @RequestMapping(value = {"/",""})
     public String getContacts(Model model){
 
-
+        model.addAttribute("user",userService.getCurrentUser());
         model.addAttribute("dateFormat",dateFormat2);
         model.addAttribute("contacts",contactService.selectUserContacts());
         return "contacts";
