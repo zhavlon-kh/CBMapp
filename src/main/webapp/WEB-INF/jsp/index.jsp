@@ -53,7 +53,7 @@ Header
                 <li class="menu-active"><a href="#hero">Home</a></li>
                 <li><a href="/profile">My Profile</a></li>
                 <li><a href= "/contacts">Contacts</a></li>
-                <li><a href="/login">Logout</a></li>
+                <li><a href="/logout">Logout</a></li>
             </ul>
         </nav><!-- #nav-menu-container -->
     </div>

@@ -12,7 +12,11 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.*;
@@ -22,8 +26,6 @@ import java.util.Set;
 
 @Controller
 public class IOFileController {
-
-
 
     @Autowired
     private UserService userService;
@@ -70,6 +72,25 @@ public class IOFileController {
             writer.close();
         }
 
+    }
+
+    @RequestMapping(value = "/import", method = RequestMethod.GET)
+    public String getImport(){
+        return "import";
+    }
+
+    @RequestMapping(value = "/import", method = RequestMethod.POST)
+    public String handleImport(@RequestParam("file") MultipartFile file, RedirectAttributes attributes){
+
+        if(fileService.storeFile(file)){
+            attributes.addFlashAttribute("message",
+                    "You successfully uploaded " + file.getOriginalFilename() + "!");
+        }else {
+            attributes.addFlashAttribute("message",
+                    "There are some problem with uploading file: " + file.getOriginalFilename() + "!");
+        }
+
+        return "redirect:/contacts";
     }
 
 

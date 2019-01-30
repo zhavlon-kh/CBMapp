@@ -2,10 +2,11 @@ package kg.apps.CBMapp.service;
 
 import org.json.JSONArray;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.List;
 import java.util.Set;
 
 @Service
@@ -18,5 +19,7 @@ public interface FileService {
     JSONArray getContactsAsJsonArrayByIds(Set<Long> idSet);
 
     JSONArray getAllUserContactsAsJsonArray() throws Exception;
+
+    boolean storeFile(MultipartFile getFile);
 
 }

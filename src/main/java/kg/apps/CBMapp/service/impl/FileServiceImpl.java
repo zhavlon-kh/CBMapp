@@ -2,16 +2,20 @@ package kg.apps.CBMapp.service.impl;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import kg.apps.CBMapp.model.Contact;
+import kg.apps.CBMapp.model.ContactEmail;
+import kg.apps.CBMapp.model.ContactMobile;
 import kg.apps.CBMapp.model.User;
-import kg.apps.CBMapp.service.ContactService;
-import kg.apps.CBMapp.service.FileService;
-import kg.apps.CBMapp.service.UserService;
+import kg.apps.CBMapp.service.*;
 import org.json.JSONArray;
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
+import sun.misc.IOUtils;
 
-import java.util.List;
-import java.util.Set;
+import java.io.*;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 @Service
 public class FileServiceImpl implements FileService
@@ -22,6 +26,14 @@ public class FileServiceImpl implements FileService
 
     @Autowired
     ContactService contactService;
+
+    @Autowired
+     EmailService emailService;
+
+    @Autowired
+     MobileService mobileService;
+
+     SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 
     @Override
     public JSONArray getAllUserContactsAsJsonArray() throws Exception {
@@ -57,4 +69,83 @@ public class FileServiceImpl implements FileService
 
         return null;
     }
-}
+
+
+     @Override
+     public boolean storeFile(MultipartFile getFile) {
+
+        User user = userService.getCurrentUser();
+
+        try {
+            File file = new File(getFile.getOriginalFilename());
+
+            file.createNewFile();
+
+            FileOutputStream outputStream = new FileOutputStream(file);
+            outputStream.write(getFile.getBytes());
+            outputStream.close();
+
+            FileInputStream inputStream = new FileInputStream(file.toString());
+            byte[] buffer = new byte[10];
+            StringBuilder stringBuilder = new StringBuilder();
+            while (inputStream.read(buffer)!=-1){
+                stringBuilder.append(new String(buffer));
+                buffer =new byte[10];
+            }
+
+            inputStream.close();
+
+            String jsonString = stringBuilder.toString();
+
+            //jsonString = jsonString.substring(0,jsonString.length()-3);
+            //jsonString.replace("","");
+
+            JSONArray jsonArray = new JSONArray(jsonString);
+            List<Contact> contacts = new ArrayList<>();
+            Set<ContactEmail> emails = new HashSet<>();
+
+
+            for (int i=0;i<jsonArray.length();i++){
+                Contact contact = new Contact();
+
+                JSONObject jsonObject = jsonArray.getJSONObject(i);
+
+                contact.setUser(user);
+                contact.setBirthday(dateFormat.parse(jsonObject.getString("birthday")));
+                contact.setCompany(jsonObject.getString("company"));
+                contact.setName(jsonObject.getString("name"));
+                contact.setSurname(jsonObject.getString("surname"));
+                contact.setNickname(jsonObject.getString("nickname"));
+
+                contactService.addContact(contact);
+
+                JSONArray jsonEmails = jsonObject.getJSONArray("emails");
+                JSONArray jsonMobiles = jsonObject.getJSONArray("mobiles");
+                for (int j=0;j<jsonEmails.length();j++){
+                    JSONObject jsonEmail = jsonEmails.getJSONObject(j);
+                    ContactEmail email =new ContactEmail();
+                    email.setContact(contact);
+                    email.setEmail(jsonEmail.getString("email"));
+                    emailService.addEmail(email);
+                }
+
+                for (int k=0; k<jsonMobiles.length(); k++){
+                    JSONObject jsonMobile = jsonMobiles.getJSONObject(k);
+                    ContactMobile mobile = new ContactMobile();
+                    mobile.setContact(contact);
+                    mobile.setPhoneNumber(jsonMobile.getString("phoneNumber"));
+                    mobileService.addMobile(mobile);
+                }
+
+
+            }
+
+            return true;
+
+        }catch (Exception e){
+            return false;
+        }
+
+
+     }
+ }
