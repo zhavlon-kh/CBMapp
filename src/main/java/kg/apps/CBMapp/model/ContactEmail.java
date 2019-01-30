@@ -1,5 +1,6 @@
 package kg.apps.CBMapp.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import javax.persistence.*;
@@ -16,7 +17,7 @@ public class ContactEmail {
 
     @ManyToOne
     @JoinColumn
-    @JsonManagedReference
+    @JsonBackReference
     private Contact contact;
 
     public ContactEmail() {

@@ -1,6 +1,7 @@
 package kg.apps.CBMapp.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import java.util.Collection;
 
@@ -38,7 +39,7 @@ public class User
 
 
     @OneToMany(mappedBy = "user")
-    @JsonBackReference
+    @JsonManagedReference
     private Collection<Contact> contacts;
 
     public User() {

@@ -13,7 +13,7 @@ public interface UserService extends UserDetailsService {
 
     void registerNewUser(User newUser);
 
-    List<Contact> userContacts(User user);
+    List<Contact> getUserContacts(User user);
 
     void deleteUserById(int userId);
 
@@ -22,5 +22,7 @@ public interface UserService extends UserDetailsService {
     User getUserById(int userId);
 
     User getCurrentUser();
+
+
 
 }

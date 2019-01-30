@@ -1,11 +1,7 @@
 package kg.apps.CBMapp.controller;
 
-import com.fasterxml.jackson.core.JsonEncoding;
-import com.fasterxml.jackson.core.JsonFactory;
-import com.fasterxml.jackson.core.JsonGenerator;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import kg.apps.CBMapp.model.Contact;
-import kg.apps.CBMapp.model.User;
+import kg.apps.CBMapp.repository.ContactRepository;
 import kg.apps.CBMapp.service.FileService;
 import kg.apps.CBMapp.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,36 +10,39 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
+import javax.servlet.http.HttpServletResponse;
+import java.io.*;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
+//@Controller
 public class IOFileController {
 
-    @Autowired
-    private FileService fileService;
+
 
     @Autowired
     private UserService userService;
 
-    @RequestMapping("/getfile/{username}")
-    @ResponseBody
-    public ResponseEntity<Object> tren(@PathVariable String username) throws IOException {
+    @Autowired
+    private FileService fileService;
 
-        User user = userService.getCurrentUser();
-        List<Contact> contactsOfUser = userService.userContacts(user);
+    /*@RequestMapping("/expall")
+    public ResponseEntity<Object> exportAllUserContacts(HttpServletResponse response) throws Exception {
 
-        String fileName = username+".json";
-        File file = new File(fileName);
-        ObjectMapper mapper =new ObjectMapper();
+        String username = userService.getCurrentUser().getUsername();
 
-        mapper.writeValue(file,contactsOfUser);
+        String fileName = FileService.now()+username+".json";
+        File file = new File("All"+fileName);
+        FileWriter writer = new FileWriter(file);
+
+        String jsonString = fileService.getAllUserContactsAsJsonArray().toString();
+        writer.write(jsonString);
+
 
         try {
             InputStreamResource resource = new InputStreamResource(new FileInputStream(file));
@@ -54,6 +53,8 @@ public class IOFileController {
             headers.add("Pragma", "no-cache");
             headers.add("Expires", "0");
 
+            response.setHeader("Content-Disposition","attachment; filename="+fileName);
+
             ResponseEntity<Object> responseEntity = ResponseEntity
                     .ok()
                     .headers(headers)
@@ -63,8 +64,34 @@ public class IOFileController {
 
         } catch (FileNotFoundException e) {
             return new ResponseEntity<>("error occurred", HttpStatus.INTERNAL_SERVER_ERROR);
+        } finally {
+            if (file.exists()) file.delete();
+            writer.close();
         }
 
     }
+
+
+    @Autowired
+    ContactRepository contactRepository;
+
+    @RequestMapping("/train")
+    @ResponseBody
+    public String training() throws Exception {
+
+        Set<Long> idSet = new HashSet<>();
+        List<Contact> contacts = userService.getUserContacts(userService.getCurrentUser());
+
+        for (Contact contact :
+                contacts) {
+            idSet.add(contact.getId());
+        }
+
+        List<Contact> cont = contactRepository.findAll(idSet);
+
+        return cont.toString();
+
+        //return fileService.getContactsAsJsonArrayByIds(idSet).toString();
+    }*/
 
 }

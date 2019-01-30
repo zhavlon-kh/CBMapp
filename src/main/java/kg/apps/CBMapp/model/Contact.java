@@ -24,15 +24,15 @@ public class Contact {
 
     @ManyToOne
     @JoinColumn//(name = "ContactBookId")
-    @JsonManagedReference
+    @JsonBackReference
     private User user;
 
     @OneToMany(mappedBy = "contact",fetch = FetchType.EAGER)
-    @JsonBackReference
+    @JsonManagedReference
     private Set<ContactMobile> mobiles;
 
     @OneToMany(mappedBy = "contact", fetch = FetchType.EAGER)
-    @JsonBackReference
+    @JsonManagedReference
     private Set<ContactEmail> emails;
 
     public Contact() {
