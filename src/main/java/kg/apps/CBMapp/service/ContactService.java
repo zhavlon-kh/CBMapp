@@ -4,6 +4,7 @@ import kg.apps.CBMapp.model.Contact;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Set;
 
 @Service
 public interface ContactService {
@@ -15,5 +16,7 @@ public interface ContactService {
     void deleteContactById(long contactId);
 
     Contact getContactById(Long id) throws Exception;
+
+    List<Contact> getAllContactsWithIds(Set<Long> idSet) throws Exception;
 
 }

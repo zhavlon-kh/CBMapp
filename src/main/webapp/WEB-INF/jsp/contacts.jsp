@@ -329,6 +329,7 @@
             <a href="/contacts/form" class="btn btn-success" data-toggle="modal"><i class="material-icons">&#xE147;</i> <span>Add New Contact</span></a>        </div>
     </div>
 </div>
+    <form action="/explist" method="post">
 <table class="table table-striped table-hover">
 <thead>
 <tr>
@@ -353,7 +354,7 @@
     <tr>
     <td>
     <span class="custom-checkbox">
-    <input type="checkbox" id="checkbox1" name="options[]" value="${contact.id}">
+    <input type="checkbox" class="checkbox1" id="checkbox1" name="ids" value="${contact.id}">
     <label for="checkbox1"></label>
     </span>
     </td>
@@ -376,7 +377,36 @@
 </c:forEach>
     </tbody>
     </table>
+        <span id="buttons-hbox">
+            <button id="export" name="export" value="export">Export Selected Contacts</button>
+        </span>
+        <span>
+            <button id="delete" name="delete" value="delete">Delete Selected Contacts</button>
+        </span>
+    </form>
     </div>
     </div>
+
+<%--Script copied from
+https://stackoverflow.com/questions/30942958/hide-submit-button-if-selected-option-value-is-null
+--%>
+<%--<script>
+    // Executed when DOM is loaded
+    $(document).ready(function() {
+        // Executed when select is changed
+        $(".checkbox1").on('change',function() {
+            var x = $(document).getElementsByClassName(".checkbox1").toString();
+
+            if (x == "") {
+                $("#export").hide();
+            } else {
+                $("#export").show();
+            }
+        });
+
+        // It must not be visible at first time
+        $("#export").css("display","none");
+    });
+</script>--%>
     </body>
 </html>

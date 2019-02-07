@@ -16,7 +16,7 @@ public interface FileService {
         return DateTimeFormatter.ofPattern("yyyyMMdd_HHmmss").format(LocalDateTime.now());
     }
 
-    JSONArray getContactsAsJsonArrayByIds(Set<Long> idSet);
+    JSONArray getContactsAsJsonArrayByIds(Set<Long> idSet) throws Exception;
 
     JSONArray getAllUserContactsAsJsonArray() throws Exception;
 

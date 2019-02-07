@@ -10,8 +10,10 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 @Service
 public class ContactServiceImpl implements ContactService {
@@ -45,17 +47,26 @@ public class ContactServiceImpl implements ContactService {
 
     @Override
     public Contact getContactById(Long id) throws Exception {
-        if (id.equals(null) || id<0)
+        if (id.equals(null) || id<=0)
             throw new Exception("MyError: Contact for edit cannot found, please insert Long id variable to getContactById contactService...");
 
 
 
-        Optional<Contact> contact = contactRepository.findById(id);
+        Contact contact = contactRepository.findById(id).get();
 
-        if (!contact.isPresent())
-            throw new Exception("MyError: Contact for edit cannot found, please insert Long id variable to getContactById contactService...");
 
-        return contact.get();
+        return contact;
+    }
+
+    @Override
+    public List<Contact> getAllContactsWithIds(Set<Long> idSet) throws Exception {
+        List<Contact> contactList = new ArrayList<>();
+
+        for (long id:idSet){
+            Contact contact =getContactById(id);
+            contactList.add(contact);
+        }
+        return contactList;
     }
 
     static User getCurrentUser(UserRepository userRepository){

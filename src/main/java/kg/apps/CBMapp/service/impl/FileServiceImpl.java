@@ -1,5 +1,6 @@
 package kg.apps.CBMapp.service.impl;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import kg.apps.CBMapp.model.Contact;
 import kg.apps.CBMapp.model.ContactEmail;
@@ -11,7 +12,6 @@ import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
-import sun.misc.IOUtils;
 
 import java.io.*;
 import java.text.SimpleDateFormat;
@@ -42,32 +42,29 @@ public class FileServiceImpl implements FileService
 
         List<Contact> contacts = userService.getUserContacts(user);
 
-        ObjectMapper mapper = new ObjectMapper();
-
-        String jsonString = mapper.writeValueAsString(contacts);
-
-        JSONArray jsonElements = new JSONArray(jsonString);
-
-        for (int i=0;i<jsonElements.length();i++){
-            jsonElements.getJSONObject(i).remove("id");
-            JSONArray jsonMobiles = jsonElements.getJSONObject(i).getJSONArray("mobiles");
-            JSONArray jsonEmails = jsonElements.getJSONObject(i).getJSONArray("emails");
-            for (int j=0; j<jsonEmails.length();j++){
-                jsonEmails.getJSONObject(j).remove("id");
-            }
-            for (int k=0; k<jsonMobiles.length();k++){
-                jsonMobiles.getJSONObject(k).remove("id");
-            }
-        }
-
+        JSONArray jsonElements = getJSONArrayOfContacts(contacts);
 
         return jsonElements;
     }
 
     @Override
-    public JSONArray getContactsAsJsonArrayByIds(Set<Long> idSet) {
+    public JSONArray getContactsAsJsonArrayByIds(Set<Long> idSet) throws Exception {
 
-        return null;
+        User user = userService.getCurrentUser();
+
+        List<Contact> contacts = contactService.getAllContactsWithIds(idSet);
+
+        ObjectMapper mapper = new ObjectMapper();
+
+
+
+        String jsonString = mapper.writeValueAsString(contacts);
+
+        JSONArray jsonElements = new JSONArray(jsonString);
+
+        removeIdsFromJson(jsonElements);
+
+        return jsonElements;
     }
 
 
@@ -147,5 +144,30 @@ public class FileServiceImpl implements FileService
         }
 
 
+     }
+
+     private static JSONArray getJSONArrayOfContacts(List<Contact> contacts) throws JsonProcessingException {
+         ObjectMapper mapper = new ObjectMapper();
+
+         String jsonString = mapper.writeValueAsString(contacts);
+
+         JSONArray jsonElements = new JSONArray(jsonString);
+
+         removeIdsFromJson(jsonElements);
+         return jsonElements;
+     }
+
+     private static void removeIdsFromJson(JSONArray jsonElements){
+         for (int i=0;i<jsonElements.length();i++){
+             jsonElements.getJSONObject(i).remove("id");
+             JSONArray jsonMobiles = jsonElements.getJSONObject(i).getJSONArray("mobiles");
+             JSONArray jsonEmails = jsonElements.getJSONObject(i).getJSONArray("emails");
+             for (int j=0; j<jsonEmails.length();j++){
+                 jsonEmails.getJSONObject(j).remove("id");
+             }
+             for (int k=0; k<jsonMobiles.length();k++){
+                 jsonMobiles.getJSONObject(k).remove("id");
+             }
+         }
      }
  }
