@@ -48,7 +48,16 @@ public class ContactServiceImpl implements ContactService {
     }
 
     @Override
-    public void deleteContactById(long contactId) {
+    public void deleteContactById(long contactId) throws Exception {
+
+        Contact contact = this.getContactById(contactId);
+
+        Set<ContactEmail> emails = contact.getEmails();
+        Set<ContactMobile> mobiles = contact.getMobiles();
+
+        emailService.deleteEmails(emails);
+        mobileService.deleteMobiles(mobiles);
+
         contactRepository.deleteById(contactId);
     }
 

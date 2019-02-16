@@ -14,7 +14,7 @@ public interface ContactService {
 
     void  addContact(Contact newContact);
 
-    void deleteContactById(long contactId);
+    void deleteContactById(long contactId) throws Exception;
 
     void deleteContact(Contact contact);
 
