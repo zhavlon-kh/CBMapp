@@ -18,4 +18,6 @@ public interface EmailService {
     void deleteEmail(ContactEmail contactEmail);
 
     void deleteEmailById(Long emailId);
+
+    void deleteEmails(Iterable<ContactEmail> emails);
 }

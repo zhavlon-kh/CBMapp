@@ -3,6 +3,7 @@ package kg.apps.CBMapp.service;
 import kg.apps.CBMapp.model.Contact;
 import org.springframework.stereotype.Service;
 
+import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
@@ -15,8 +16,11 @@ public interface ContactService {
 
     void deleteContactById(long contactId);
 
+    void deleteContact(Contact contact);
+
     Contact getContactById(Long id) throws Exception;
 
     List<Contact> getAllContactsWithIds(Set<Long> idSet) throws Exception;
 
+    void deleteContacts(Iterable<Contact> contacts);
 }
