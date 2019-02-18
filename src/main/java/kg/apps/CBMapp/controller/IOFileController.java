@@ -1,8 +1,5 @@
 package kg.apps.CBMapp.controller;
 
-import com.sun.xml.internal.ws.api.ha.StickyFeature;
-import kg.apps.CBMapp.model.Contact;
-import kg.apps.CBMapp.repository.ContactRepository;
 import kg.apps.CBMapp.service.ContactService;
 import kg.apps.CBMapp.service.FileService;
 import kg.apps.CBMapp.service.UserService;
