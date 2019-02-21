@@ -7,6 +7,7 @@ import org.springframework.security.config.annotation.method.configuration.Enabl
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import kg.apps.CBMapp.repository.UserRepository;
@@ -37,13 +38,17 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter
                 .anyRequest().permitAll()
                 .and()
                 .formLogin()
-                .loginPage("/login").permitAll()
+                .loginPage("/login")
+                .permitAll()
                 .defaultSuccessUrl("/index")
-        		.and().logout()
+        		.and()
+                .logout()
         		.logoutUrl("/logout") 
         		.logoutSuccessUrl("/login")
-        		.and().exceptionHandling() 
-        		.accessDeniedPage("/error");
+        		//.and()
+                //.exceptionHandling()
+        		//.accessDeniedPage("/error")
+        ;
     }
 
     private PasswordEncoder getPasswordEncoder()
@@ -59,7 +64,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter
             @Override
             public boolean matches(CharSequence charSequence, String s)
             {
-                return true;
+                 return charSequence.toString().equals(s);
             }
         };
     }

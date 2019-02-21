@@ -2,6 +2,7 @@ package kg.apps.CBMapp.service.impl;
 
 import kg.apps.CBMapp.model.Contact;
 import kg.apps.CBMapp.security.CustomUserDetails;
+import kg.apps.CBMapp.service.ContactService;
 import kg.apps.CBMapp.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -22,6 +23,9 @@ public class UserServiceImpl implements UserService
 {
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private ContactService contactService;
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException
@@ -53,7 +57,6 @@ public class UserServiceImpl implements UserService
 
     @Override
     public void deleteUserById(int userId) {
-
         userRepository.deleteById(userId);
     }
 
@@ -77,7 +80,9 @@ public class UserServiceImpl implements UserService
     @Override
     public void deleteUser(User user) {
 
+        List<Contact> contacts = this.getUserContacts(user);
 
+        contactService.deleteContacts(contacts);
 
         userRepository.delete(user);
 

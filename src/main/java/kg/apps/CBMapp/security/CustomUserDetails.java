@@ -4,6 +4,7 @@ import kg.apps.CBMapp.model.User;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 
 import java.util.Collection;
 import java.util.HashSet;
@@ -28,7 +29,7 @@ public class CustomUserDetails extends User implements UserDetails {
 
     @Override
     public String getPassword() {
-        return super.getPassword();
+        return  super.getPassword();
     }
 
     @Override

@@ -48,4 +48,9 @@ public class EmailServiceImpl implements EmailService {
         contactEmailRepository.deleteById(emailId);
 
     }
+
+    @Override
+    public void deleteEmails(Iterable<ContactEmail> emails) {
+        contactEmailRepository.deleteAll(emails);
+    }
 }

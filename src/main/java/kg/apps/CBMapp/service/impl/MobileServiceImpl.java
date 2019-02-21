@@ -34,4 +34,9 @@ public class MobileServiceImpl implements MobileService {
     public void addMobile(ContactMobile mobile) {
         mobileRepository.save(mobile);
     }
+
+    @Override
+    public void deleteMobiles(Iterable<ContactMobile> mobiles) {
+        mobileRepository.deleteAll(mobiles);
+    }
 }

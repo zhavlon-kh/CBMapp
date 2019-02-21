@@ -243,6 +243,7 @@ public class ContactsController {
 
         boolean userContact = false;
 
+        //Check for Contact that contact is the logged user's contact.
         for (Contact contact:userContacts){
             if (contact.getId()==id){
                 userContact=true;
@@ -267,8 +268,13 @@ public class ContactsController {
 
     @RequestMapping(value = "/delete/{id}")
     public String deleteContact(@PathVariable long id){
-        contactService.deleteContactById(id);
-        return "redirect:/contacts";
+        try {
+            contactService.deleteContactById(id);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }finally {
+            return "redirect:/contacts";
+        }
     }
 
 }

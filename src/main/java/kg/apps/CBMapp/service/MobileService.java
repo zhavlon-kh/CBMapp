@@ -15,4 +15,6 @@ public interface MobileService {
     void deleteMobileById(Long id);
 
     void addMobile(ContactMobile mobile);
+
+    void deleteMobiles(Iterable<ContactMobile> mobiles);
 }

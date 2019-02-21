@@ -1,19 +1,20 @@
 package kg.apps.CBMapp.service.impl;
 
 import kg.apps.CBMapp.model.Contact;
+import kg.apps.CBMapp.model.ContactEmail;
+import kg.apps.CBMapp.model.ContactMobile;
 import kg.apps.CBMapp.model.User;
 import kg.apps.CBMapp.repository.ContactRepository;
 import kg.apps.CBMapp.repository.UserRepository;
 import kg.apps.CBMapp.service.ContactService;
+import kg.apps.CBMapp.service.EmailService;
+import kg.apps.CBMapp.service.MobileService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 
 @Service
 public class ContactServiceImpl implements ContactService {
@@ -22,6 +23,12 @@ public class ContactServiceImpl implements ContactService {
 
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private EmailService emailService;
+
+    @Autowired
+    private MobileService mobileService;
 
     @Override
     public List<Contact> selectUserContacts() {
@@ -41,8 +48,28 @@ public class ContactServiceImpl implements ContactService {
     }
 
     @Override
-    public void deleteContactById(long contactId) {
+    public void deleteContactById(long contactId) throws Exception {
+
+        Contact contact = this.getContactById(contactId);
+
+        Set<ContactEmail> emails = contact.getEmails();
+        Set<ContactMobile> mobiles = contact.getMobiles();
+
+        emailService.deleteEmails(emails);
+        mobileService.deleteMobiles(mobiles);
+
         contactRepository.deleteById(contactId);
+    }
+
+    @Override
+    public void deleteContact(Contact contact) {
+        Set<ContactEmail> emails = contact.getEmails();
+        Set<ContactMobile> mobiles = contact.getMobiles();
+
+        emailService.deleteEmails(emails);
+        mobileService.deleteMobiles(mobiles);
+
+        contactRepository.delete(contact);
     }
 
     @Override
@@ -67,6 +94,14 @@ public class ContactServiceImpl implements ContactService {
             contactList.add(contact);
         }
         return contactList;
+    }
+
+    @Override
+    public void deleteContacts(Iterable<Contact> contacts) {
+        for (Contact c :
+                contacts) {
+            this.deleteContact(c);
+        }
     }
 
     static User getCurrentUser(UserRepository userRepository){
