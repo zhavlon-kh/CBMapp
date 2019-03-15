@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import javax.persistence.*;
+import javax.validation.constraints.Email;
 
 @Entity
 @Table(name = "email")
@@ -13,6 +14,7 @@ public class ContactEmail {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
+    @Email
     private String email;
 
     @ManyToOne

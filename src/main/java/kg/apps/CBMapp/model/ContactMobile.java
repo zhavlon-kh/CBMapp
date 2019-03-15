@@ -11,7 +11,7 @@ import javax.persistence.*;
 public class ContactMobile {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
     private String phoneNumber;
