@@ -5,24 +5,29 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Null;
+import javax.validation.constraints.Size;
+import java.util.Calendar;
 import java.util.Date;
-import java.util.List;
 import java.util.Set;
 
 @Entity
 public class Contact {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private long id;
-    @Column(nullable = false)
+    @NotNull
+    @Size(min = 2,max = 35)
     private String name;
     @Column(nullable = false)
     private String surname;
     private String nickname;
     private String company;
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
-    private Date birthday;
+    //@Null
+    private Date birthday = Calendar.getInstance().getTime();
 
     @ManyToOne
     @JoinColumn

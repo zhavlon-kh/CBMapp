@@ -9,6 +9,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import kg.apps.CBMapp.model.User;
@@ -27,6 +28,9 @@ public class UserServiceImpl implements UserService
     @Autowired
     private ContactService contactService;
 
+    @Autowired
+    PasswordEncoder encoder;
+
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException
     {
@@ -41,7 +45,8 @@ public class UserServiceImpl implements UserService
     @Override
     public void registerNewUser(User newUser)
     {
-    	userRepository.save(newUser);
+        newUser.setPassword(encoder.encode(newUser.getPassword()));
+        userRepository.save(newUser);
     }
 
     @Override
@@ -56,8 +61,17 @@ public class UserServiceImpl implements UserService
 
 
     @Override
-    public void deleteUserById(int userId) {
-        userRepository.deleteById(userId);
+    public boolean deleteUserById(int userId) {
+
+        User user = getCurrentUser();
+
+
+        if (getCurrentUser().getId()==userId) {
+
+            return deleteUser(user);
+
+        }
+        return false;
     }
 
     @Override
@@ -78,13 +92,15 @@ public class UserServiceImpl implements UserService
     }
 
     @Override
-    public void deleteUser(User user) {
+    public boolean deleteUser(User user) {
 
         List<Contact> contacts = this.getUserContacts(user);
 
         contactService.deleteContacts(contacts);
 
         userRepository.delete(user);
+
+        return true;
 
     }
 }
