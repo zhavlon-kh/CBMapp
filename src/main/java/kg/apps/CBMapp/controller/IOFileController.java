@@ -1,7 +1,9 @@
 package kg.apps.CBMapp.controller;
 
+import kg.apps.CBMapp.model.Contact;
 import kg.apps.CBMapp.service.ContactService;
 import kg.apps.CBMapp.service.FileService;
+import kg.apps.CBMapp.service.PdfFileService;
 import kg.apps.CBMapp.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.InputStreamResource;
@@ -184,5 +186,15 @@ public class IOFileController {
         }
         return null;
     }*/
+
+    @Autowired
+    PdfFileService pdfFileService;
+
+    @RequestMapping("/getpdf")
+    public String getTrainingFile(){
+        List<Contact> contacts = userService.getUserContacts(userService.getCurrentUser());
+        if (pdfFileService.getContacsInPdf(contacts)) return "redirect:/explist/Contacts.pdf";
+        return "redirect:/";
+    }
 
 }
